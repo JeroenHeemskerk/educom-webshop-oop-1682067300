@@ -5,8 +5,8 @@
     require_once('forms.php');
     require_once('validations.php');
     require_once('user_service.php');
-    require_once('file_repository.php');
-    require_once('sessions');
+    require_once('db_repository.php');
+    require_once('sessions.php');
 
     $page = getRequestedPage();
     $data = processRequest($page);
