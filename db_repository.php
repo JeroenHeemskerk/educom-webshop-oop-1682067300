@@ -31,6 +31,10 @@ function saveNewUser($email,$name,$password) {
         if (!mysqli_query($conn, $sql)) {
             throw new Exception("Query failed, SQL: " . $sql . "Error: " . mysqli_error($conn));
         }
+        
+        }
+    catch(Exception $e){
+        echo $e->getMessage();
     }
     finally {
         closeDB($conn);
@@ -50,7 +54,11 @@ function findUserByEmail($email){
         $user = mysqli_fetch_assoc($result);
         return $user;
         }
-        finally {
+    catch(Exception $e){
+        echo $e->getMessage();
+    }
+        
+    finally {
         closeDB($conn);
     } 
 }
