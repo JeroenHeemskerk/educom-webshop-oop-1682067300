@@ -1,0 +1,72 @@
+				body {
+				max-width:800px; /* maximale paginebreedte van 800px */
+				margin:auto;  /* margin auto om de pagine te centreren*/
+				
+				}
+				div.content {
+				text-align:left; /*tekst links laten uitlijnen*/
+				color: rgb(60, 60, 60); /*donkergrijze kleur voor de tekst, rgb werkte beter dan simpelweg 'darkgrey'*/
+				font-size: 12px; /*tekst van 12pixels groot*/
+				}
+				#menu {
+				position:fixed; /*zodat je altijd bij het menu een andere pagina kan selecteren ipv weer omhoog te scrollen*/
+				top:0;
+				left:0;
+				border-style:solid; /*duidelijke outline voor het menu*/
+				border-width:5px; 
+				width:120px; 
+				list-style-type:none; /*om de bullet points weg te halen*/
+				padding:0;
+				margin-top:5px; /* zodat elke "knop" er wat beter uit ziet*/
+				background-color: blue; /* blauwe achtergrond */
+				}
+				h1 {	/* hiermee bepaal ik de positie en de grootte van de header */
+				position:static; 
+				top:10px;
+				font-size:48px;
+				text-align:center;
+				}
+				h2,h3,h4 { /* hiermee pas ik de hoofdteksten van de headers van de verschillende delen op de about page aan te passen */
+				font-size:150%;
+				text-align:left;
+				}
+				img {text-align:left; /* hiermee pas ik de positie en grootte van de afbeelding aan */
+				width:20%;
+				}	
+				#menu li { /* om de list optie van het menu ook een aparte border te geven */
+				border-style:solid;
+				margin:5px;
+				}
+				a { /* Zodat de links in het menu wit blijven */
+					color:white;
+					text-decoration: none;
+				}
+				a.login {
+					color: rgb(60, 60, 60);
+					text-decoration: underline;
+				}
+				footer { /* voor de positie en grootte copyright */
+				position: fixed;
+				right:0;
+				bottom:0;
+				background-color:black;
+				color:white;
+				font-size:10px;			
+				}
+				.active {    
+					font-size:18px;	/* hiermee pas ik de font-size aan zodat het duidelijker te zien is op welke pagina je op dat moment bent */
+					text-decoration: none; /* voor het verwijderen van de underline van de links */
+				}
+				input[type="text"] { /* om de breedte van de input velden aan te passen */
+					width:400px;
+				}
+				input[type="password"] {
+					width:400px;
+				}
+
+				textarea { /* om de breedte van de textarea aan te passen */
+					width:400px;
+				}
+				span.error {
+					color:red;
+				}
