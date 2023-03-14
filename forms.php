@@ -4,7 +4,7 @@ function showRegisterForm($data) { /* register form */
 
     echo '<form method="post" action="index.php">
     <label for="email">E-mail:</label><br>
-    <input type="text" name="email" value="' . $data["email"] . '"><br>
+    <input type="email" name="email" value="' . $data["email"] . '"><br>
     <span class="error">' . $data["emailErr"] . '</span><br>
     <label for="name">Naam:</label><br>
     <input type="text" name="name" value="' . $data["name"] . '"><br>
@@ -66,6 +66,21 @@ function showLoginForm($data) {
                 <span class="error">' . $data["passwordErr"] . '<br></span>
                 <input name="page" type="hidden" value="login">
                 <input type="submit" name="login" value="Inloggen">';
+}
+
+function showChangePassForm($data) {
+    echo    '<form method="post" action="index.php"
+            <label for="password">Huidig wachtwoord:</label><br>
+                <input type="password" name="password" value="' . $data["password"] . '"><br>
+                <span class="error">' .$data["passwordErr"] . '<br></span>
+            <label for="newpassword">Nieuw wachtwoord:</label><br>
+                <input type="password" name="newpassword" value="' . $data["newpassword"] . '"><br>
+                <span class="error">' . $data["newpasswordErr"] . '<br></span>
+            <label for="repeatnewpass">Herhaal nieuw wachtwoord:</label><br>
+                <input type="password" name="repeatnewpassword" value="' . $data["repeatnewpassword"] . '"><br>
+                <span class="error">' . $data["repeatnewpasswordErr"] . '<br></span>
+            <input name="page" type="hidden" value="changepass">
+            <input type="submit" name="newpass" value="Wachtwoord wijzigen">';
 }
 
 function test_input($data) {

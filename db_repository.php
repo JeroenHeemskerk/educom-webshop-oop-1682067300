@@ -7,10 +7,11 @@ $username = "rubens_webshop_user";
 $password = "test1234";
 $database = "rubens_webshop";
 
-$conn = mysqli_connect($servername, $username, $password, $database);    
+mysqli_report(MYSQLI_REPORT_OFF);
+$conn = @mysqli_connect($servername, $username, $password, $database);    
 
 if (!$conn) {
-    throw new Exception("Cannot establish connection with the database." . mysqli_connect_error());
+    throw new Exception("Can not connect to database. Error: " . mysqli_connect_error());
 }
 return $conn;
 }
@@ -32,9 +33,6 @@ function saveNewUser($email,$name,$password) {
             throw new Exception("Query failed, SQL: " . $sql . "Error: " . mysqli_error($conn));
         }
         
-        }
-    catch(Exception $e){
-        echo $e->getMessage();
     }
     finally {
         closeDB($conn);
@@ -49,18 +47,43 @@ function findUserByEmail($email){
         $sql = "SELECT id, email, name, password FROM users WHERE email = '$email'";
         $result = mysqli_query($conn, $sql);
         if ($result == false) {
-            throw new Exception("Query failed, SQL: " . $sql . "Error: " . mysqli_error($conn));
+            throw new Exception("Query failed, SQL: " . $sql . " Error: " . mysqli_error($conn));
         }
         $user = mysqli_fetch_assoc($result);
         return $user;
-        }
-    catch(Exception $e){
-        echo $e->getMessage();
-    }
-        
+    }    
     finally {
         closeDB($conn);
     } 
 }
 
+function findUserByID($id) {
+    $conn = connectToDB();
+    $id = getLoggedInID();
+    try {
+        $id = mysqli_real_escape_string($conn, $id);
+        $sql = "SELECT * FROM users WHERE id=$id";
+        $result = mysqli_query($conn, $sql);
+        if ($result == false) {
+            throw new Exception("Query failed, SQL: " . $sql . " Error: " . mysqli_error($conn));
+        }
+        $user = mysqli_fetch_assoc($result);
+        return $user; 
+    }
+    finally {
+        closeDB($conn);
+    }
+}
+
+function updateUserPass($password) {
+    $conn = connectToDB();
+    
+    try {
+        $sql = "UPDATE `users` SET `password`= '$password' WHERE ID=" . getLoggedInID() . ";";
+    mysqli_query($conn, $sql);
+    }
+    finally {
+        closeDB($conn);
+    } 
+}    
 ?>
