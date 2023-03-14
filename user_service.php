@@ -11,6 +11,10 @@
     function StoreUser($email, $name, $password) {
         saveNewUser($email, $name, $password);
     }
+
+    function ChangePass($password) {
+        updateUserPass($password);
+    }
     
     define("VALID_LOGIN", 0);
     define("WRONG_PASSWORD", -1);

@@ -30,13 +30,20 @@
             case 'login' : 
                 $data = validateLogin();
                 if ($data['valid']) {
-                    loginUser($data['name']);
+                    loginUser($data['name'], $data['id']);
                     $page = 'home';
                 }
                 break;
             case 'logout' :
                 logoutUser();
                 $page = 'home';
+                break;
+            case 'changepass':
+                $data = validateChangePass();
+                if ($data['valid']) {
+                    ChangePass($data['newpassword']);
+                    $page = 'home';
+                }
                 break;
             }
         
@@ -109,6 +116,7 @@
                 echo '<body>';
                 showHeader($data);
                 showMenu();
+                showGenericErr($data);
                 showContent($data);
                 showFooter();
                 echo '</body>';
@@ -152,6 +160,7 @@
             $Menu['register'] = "Registreer";
             $Menu['login'] = "Log in";
         } else {
+            $Menu['changepass'] = "Wachtwoord wijzigen"; 
             $Menu['logout'] = "Log uit " .  getLoggedInUserName();
         }        
         echo    '<ul id="menu">';
@@ -160,6 +169,13 @@
             echo '<li><a href="index.php?page=' . $key . '">' . $MenuOptions. '</a></li>';
         } 
         echo '</ul>';
+    }
+
+    function showGenericErr($data) {
+        if (isset($data['genericErr'])) {
+            echo '<span class="error">' . $data['genericErr'] . '</span>';
+        }
+         
     }
     
     function showContent($data) { //showing page content
@@ -191,6 +207,9 @@
                 require_once ('login.php');
                 showLoginForm($data);
                 break;
+            case 'changepass' :
+                showChangePassForm($data);
+                break;
             default:
                 echo "ERROR, Page not found"; 
                 break;
@@ -208,5 +227,15 @@
     function showDocumentEnd() {
         echo "</html>";
     }
+    function logError($message) {
+        debugToConsole($message);
+        
+    }
+    function debugToConsole($data) {
+        $output = str_replace("'", "\\'" , $data); // escape all possible ' characters.
+        if (is_array($output))
+            $output = implode(',', $output);
+        echo "<script>console.log('Debug Objects: " . $output . "' );</script>";
+      }
 ?>        
                 

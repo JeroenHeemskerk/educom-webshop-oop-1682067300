@@ -36,15 +36,21 @@ $valid = false; // declaring variables
      }
      
      if ( $emailErr === "" && $nameErr === "" && $passwordErr === "" && $repeatpasswordErr === "" ) {
-        if (empty(doesEmailExist($email))) {
-            $valid = true;
-        } else { 
-            $emailErr = "* Emailadres is al in gebruik";
+        try {
+            if (empty(doesEmailExist($email))) {
+                $valid = true;
+            } else { 
+                $emailErr = "* Emailadres is al in gebruik";
             }
-     }
- }
+        }
+        catch (Exception $e) {
+            $genericErr = "Er is een technische storing, probeer het later nogmaals";
+                LogError("authentication failed " . $e -> getMessage());
+        }
+    }
+}
  return array("email" => $email, "name" => $name, "password" => $password, "repeatpassword" => $repeatpassword,
-              "emailErr" => $emailErr, "nameErr" => $nameErr, "passwordErr" => $passwordErr, "repeatpasswordErr" => $repeatpasswordErr,
+              "emailErr" => $emailErr, "nameErr" => $nameErr, "passwordErr" => $passwordErr, "repeatpasswordErr" => $repeatpasswordErr, "genericErr" => $genericErr,
                "valid" => $valid);
 
 } 
@@ -125,6 +131,8 @@ function validateLogin() {
     $email = $password = "";
     $valid = false;
     $name = "";
+    $genericErr = "";
+    $id = 0;
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {  //set login conditions
         if  (empty(getPostVar("email"))) {
@@ -141,23 +149,71 @@ function validateLogin() {
             $password=test_input(getPostVar("password"));
         }
         if ($emailErr === "" && $passwordErr === "") {
-			$authenticate = authenticateUser($email, $password);
-			switch($authenticate['result']) {
-				case VALID_LOGIN:
-					$valid = true;
-					$name = $authenticate['user']['name'];
-					break;
-				case WRONG_PASSWORD:
-					$passwordErr = "Verkeerd wachtwoord.";
-					break;
-				case WRONG_EMAIL:
-					$emailErr = "Email is onbekend.";
-					break;
+			try {
+                $authenticate = authenticateUser($email, $password);
+                switch($authenticate['result']) {
+                    case VALID_LOGIN:
+                        $valid = true;
+                        $name = $authenticate['user']['name'];
+                        $id = $authenticate['user']['id'];
+                        break;
+                    case WRONG_PASSWORD:
+                        $passwordErr = "Verkeerd wachtwoord.";
+                        break;
+                    case WRONG_EMAIL:
+                        $emailErr = "Email is onbekend.";
+                        break;
+                }
+            }
+            catch(Exception $e) {
+                $genericErr = "Er is een technische storing, probeer het later nogmaals";
+                LogError("authentication failed " . $e -> getMessage());
             }
         }
     }
     return array(
-        "valid" => $valid, "password" => $password, "passwordErr" => $passwordErr,
-        "email" => $email, "emailErr" => $emailErr, "name" => $name);
+        "valid" => $valid, "password" => $password, "passwordErr" => $passwordErr, "genericErr" => $genericErr,
+        "email" => $email, "emailErr" => $emailErr, "name" => $name, "id" => $id);
 }
+
+function validateChangePass() {
+    $user = findUserByID(getLoggedInID());
+
+    $passwordErr = $newpasswordErr = $repeatnewpasswordErr = "";
+    $password = $newpassword = $repeatnewpassword = "";
+    $valid = false;
+    
+
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        if (empty(getPostVar('password'))) {
+            $passwordErr="* Vul uw wachtwoord in";
+            } else { 
+            $password=test_input(getPostVar("password"));     
+            }
+        if (empty(getPostVar('newpassword'))) {
+            $newpasswordErr="* Vul uw nieuwe wachtwoord in";
+        } else {
+            $newpassword=test_input(getPostVar("newpassword"));
+        }
+        if (empty(getPostVar('repeatnewpassword'))) {
+            $repeatnewpasswordErr="* Herhaal uw nieuwe wachtwoord";
+        } else { $repeatnewpassword=test_input(getPostVar("repeatpassword"));
+            if (getPostVar('repeatnewpassword') !== (getPostVar('newpassword'))) {
+                $repeatnewpasswordErr ="* Uw wachtwoorden zijn niet gelijk";
+            }
+        }
+        if ($password !== $user['password']) {
+            $passwordErr="* Vul het juiste wachtwoord in";
+        }
+
+        if ( $passwordErr === "" && $newpasswordErr === "" && $repeatnewpasswordErr === "") {
+            $valid = true; }
+    }
+    return array(
+        "valid" => $valid, "password" => $password, "passwordErr" => $passwordErr,
+        "newpassword" => $newpassword, "newpasswordErr" => $newpasswordErr, "repeatnewpassword" => $repeatnewpassword,
+        "repeatnewpasswordErr" => $repeatnewpasswordErr);
+    
+}
+
 ?>
