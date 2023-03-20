@@ -79,7 +79,7 @@ function updateUserPass($password) {
     $conn = connectToDB();
     
     try {
-        $sql = "UPDATE `users` SET `password`= '$password' WHERE ID=" . getLoggedInID() . ";";
+        $sql = "UPDATE `users` SET `password`= '$password' WHERE id=" . getLoggedInID() . ";";
     mysqli_query($conn, $sql);
     }
     finally {
