@@ -1,4 +1,6 @@
 <?php
+    include 'db_repository.php';
+    
     function doesEmailExist($email) {
         $user = findUserByEmail($email);
         if (empty($user)) {
