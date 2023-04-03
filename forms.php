@@ -35,7 +35,8 @@ function showFormField($field, $label, $type, $data, $cssClass=NULL, $options = 
 }
 
 function showFormEnd($submitButton, $page) {
-    echo '<input name="page" value="' . $page . '" type="hidden">';
+    echo '<br>
+          <input name="page" value="' . $page . '" type="hidden">';
     echo '<input type="submit" name="' . $page . '" value="' . $submitButton . '">';
     echo '</form>';
 }

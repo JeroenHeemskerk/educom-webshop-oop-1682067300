@@ -10,8 +10,8 @@
 				}
 				#menu {
 				position:fixed; /*zodat je altijd bij het menu een andere pagina kan selecteren ipv weer omhoog te scrollen*/
-				top:0;
-				left:0;
+				top: 2px;
+				left:2px;
 				border-style:solid; /*duidelijke outline voor het menu*/
 				border-width:5px; 
 				width:120px; 
@@ -19,6 +19,23 @@
 				padding:0;
 				margin-top:5px; /* zodat elke "knop" er wat beter uit ziet*/
 				background-color: blue; /* blauwe achtergrond */
+				}
+				a.button {
+				background-color: blue;
+				width: 90px;
+				border-style: solid;
+				border-width: 2px;
+				border-color: black;
+				color: white;
+				padding: 5px 9px;
+				text-align: center;
+				text-decoration: none;
+				display: inline-block;
+				font-size: 12px;
+				font-weight: bold;
+				font-family: Arial, sans-serif;
+				margin: 4px;
+				cursor: pointer;
 				}
 				h1 {	/* hiermee bepaal ik de positie en de grootte van de header */
 				position:static; 
@@ -33,18 +50,11 @@
 				img {text-align:left; /* hiermee pas ik de positie en grootte van de afbeelding aan */
 				width:20%;
 				}	
-				#menu li { /* om de list optie van het menu ook een aparte border te geven */
-				border-style:solid;
-				margin:5px;
-				}
-				a { /* Zodat de links in het menu wit blijven */
+				li.menuoption { /* Zodat de links in het menu wit blijven */
 					color:white;
 					text-decoration: none;
 				}
-				a.login {
-					color: rgb(60, 60, 60);
-					text-decoration: underline;
-				}
+				
 				footer { /* voor de positie en grootte copyright */
 				position: fixed;
 				right:0;
