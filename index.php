@@ -2,10 +2,6 @@
 
     session_start();
 
-    require_once('forms.php');
-    require_once('validations.php');
-    require_once('user_service.php');
-    require_once('db_repository.php');
     require_once('sessions.php');
 
     $page = getRequestedPage();
@@ -13,6 +9,7 @@
     showResponsePage($data);
 
     function processRequest($page) {
+        include 'validations.php'; 
         switch($page) {
             case 'contact':
                 $data = validateContact();
@@ -191,11 +188,13 @@
                 break;
             case 'contact':
                 require_once('contact.php');
+                include 'forms.php';
                 echo 'Vul hier uw gegevens in:<br><br>';
                 showContactForm($data);
                 break;
             case 'register' :
                 require_once('register.php');
+                include 'forms.php';
                 echo 'Vul hier uw gegevens in:<br><br>';
                 showRegisterForm($data);
                 break;
@@ -205,9 +204,11 @@
                 break;         
             case 'login' :
                 require_once ('login.php');
+                include 'forms.php';
                 showLoginForm($data);
                 break;
             case 'changepass' :
+                include 'forms.php';
                 showChangePassForm($data);
                 break;
             default:

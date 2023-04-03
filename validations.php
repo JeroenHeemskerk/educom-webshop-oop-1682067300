@@ -1,10 +1,12 @@
 <?php
+ include 'user_service.php';
 
  function validateRegister() /* validating register form */
  {
      
 $nameErr = $emailErr = $passwordErr = $repeatpasswordErr = "";
 $name = $email = $password = $repeatpassword = "";
+$genericErr = "";
 $valid = false; // declaring variables
 
      if ($_SERVER['REQUEST_METHOD'] == "POST") {
@@ -215,5 +217,11 @@ function validateChangePass() {
         "repeatnewpasswordErr" => $repeatnewpasswordErr);
     
 }
+
+function test_input($data) {
+    $data = trim($data);
+    $data = htmlspecialchars($data);
+    return $data;
+    }
 
 ?>

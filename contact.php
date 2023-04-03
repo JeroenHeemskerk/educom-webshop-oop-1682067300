@@ -1,4 +1,4 @@
-<?php
+<?php 
     $head = "Contact";
     
     function showContactHeader()
@@ -8,7 +8,7 @@
     function showContactThanks($data) {//Showing a Thank you for filling in the form correctly.
           
         echo "<p>Bedankt voor uw bericht, " . $data['name'] . ".<br>
-                Wij zullen spoedig contact opnemen" . $data['favcontact'] . ".<br>
+                Wij zullen spoedig contact opnemen per " . $data['favcontact'] . ".<br>
                 <br>
                 Uw gegevens zijn als volgt:<br>
                 </p>";
