@@ -85,5 +85,16 @@ function updateUserPass($password) {
     finally {
         closeDB($conn);
     } 
-}    
+}
+
+function selectProducts(){
+
+    $conn = connectToDB();
+    $sql = "SELECT * FROM products";
+  
+    $data['products'] = mysqli_query($conn, $sql);
+  
+    mysqli_close($conn);
+    return $data;
+}
 ?>

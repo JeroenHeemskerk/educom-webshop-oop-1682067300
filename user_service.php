@@ -1,6 +1,6 @@
 <?php
     include 'db_repository.php';
-    
+
     function doesEmailExist($email) {
         $user = findUserByEmail($email);
         if (empty($user)) {
@@ -32,4 +32,9 @@
         }
         return array("result" => VALID_LOGIN, "user" => $user);
     }
+
+    function getProducts(){
+        $data = selectProducts();
+        return $data;
+      }
 ?>

@@ -105,6 +105,9 @@
                     require_once('login.php');
                     echo $head;
                     break;
+                case 'webshop' :
+                    require_once('webshop.php');
+                    break;
             }
         echo '</title></head>' ;   
     }
@@ -132,11 +135,16 @@
                 showAboutHeader();
                 break;
             case 'contact':
+                require_once('contact.php');
+                showContactHeader();
+                break;
             case 'thanks' :
                 require_once('contact.php');
                 showContactHeader();
                 break;  
             case 'register' :
+                require_once('register.php');
+                showRegisterHeader();
             case 'registerthanks' :
                 require_once('register.php');
                 showRegisterHeader();
@@ -145,6 +153,12 @@
                 require_once('login.php');
                 showLoginHeader();
                 break;
+            case 'webshop':
+                require_once('webshop.php');
+                showWebshopHeader();
+                break;
+
+
         } 
         echo "</h1>";     
     }
@@ -152,18 +166,18 @@
           
     
     function showMenu() { 
-        $Menu = array("home" => "Home", "about" => "Over Mij", "contact" => "Contact");
+        $Menu = array("home" => "Home", "about" => "Over Mij", "contact" => "Contact", "webshop" => "Webshop");
         if(!isUserLoggedIn()) {
             $Menu['register'] = "Registreer";
             $Menu['login'] = "Log in";
         } else {
             $Menu['changepass'] = "Wachtwoord wijzigen"; 
-            $Menu['logout'] = "Log uit " .  getLoggedInUserName();
+            $Menu['logout'] = getLoggedInUserName() . " Uitloggen";
         }        
         echo    '<ul id="menu">';
         
         foreach($Menu as $key => $MenuOptions) {
-            echo '<li><a href="index.php?page=' . $key . '">' . $MenuOptions. '</a></li>';
+            echo '<li class="menuoption"><a href="index.php?page=' . $key . '" class="button">' . $MenuOptions. '</a></li>';
         } 
         echo '</ul>';
     }
@@ -210,6 +224,11 @@
             case 'changepass' :
                 include 'forms.php';
                 showChangePassForm($data);
+                break;
+            case 'webshop' :
+                require_once('webshop.php');
+                $data = getProducts();
+                showWebshopContent($data);
                 break;
             default:
                 echo "ERROR, Page not found"; 
