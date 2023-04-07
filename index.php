@@ -48,12 +48,17 @@
         return $data;
 
     }
-
-    function getPostVar($key, $default = '') {
-        return isset($_POST[$key]) ? $_POST[$key] : $default;
+    
+    function getArrayVar($array, $key, $default = '') {
+        return isset($array[$key]) ? $array[$key] : $default;
     }
+    
+    function getPostVar($key, $default = '') {
+        return getArrayVar($_POST, $key, $default);
+    }
+    
     function getUrlVar($key, $default = '') {
-        return isset($_GET[$key]) ? $_GET[$key] : $default;
+        return getArrayVar($_GET, $key, $default);
     }
   
     function getRequestedPage() {
@@ -63,7 +68,8 @@
             return getUrlVar("page", "home"); 
         }
     }
-        
+    
+
     function showResponsePage($data) { 
         showDocumentstart(); 
         showHeadSection($data);
@@ -107,7 +113,9 @@
                     break;
                 case 'webshop' :
                     require_once('webshop.php');
+                    echo $head ;
                     break;
+                    
             }
         echo '</title></head>' ;   
     }
@@ -154,6 +162,10 @@
                 showLoginHeader();
                 break;
             case 'webshop':
+                require_once('webshop.php');
+                showWebshopHeader();
+                break;
+            case 'detail' :
                 require_once('webshop.php');
                 showWebshopHeader();
                 break;
@@ -229,6 +241,11 @@
                 require_once('webshop.php');
                 $data = getProducts();
                 showWebshopContent($data);
+                break;
+            case 'detail' :
+                require_once('webshop.php');
+                $id = getUrlVar("id");
+                showProductDetail($id);
                 break;
             default:
                 echo "ERROR, Page not found"; 

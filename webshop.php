@@ -14,12 +14,33 @@ function showWebshopContent($data) {
 }
 
 function showProduct($key, $value){
-    echo "<a href='index.php?page=detail&id=" . $value['id'] . "'>";
-    echo "<h2>" . $value['name'] . "</h2>";  
-    echo "<img src='Images/". $value['image']. " ' alt='".$value['name']."' class='img-fluid'>";
-    echo "</a>";
-    echo "<h3>&#8364; ".$value['price']."</h3>";
+    echo '<div class="productroster">';
+    echo '<a href="index.php?page=detail&id=' . $value["id"] . '">';
+    echo '<img src="Images/'. $value["image"] . '" " alt="' . $value["name"] . '" class="img">';
+    echo '<h2>' . $value["name"] . '</h2>';  
+    echo '</a>';
+    echo '<h3>&#8364; '.$value["price"].'</h3>';
+    echo '</div>';
 
 }
+
+function showProductDetail($id) {
+    $product = doesProductExist($id);
+    echo '<div class="productheader">
+            <h1>' . $product["name"] . '</h1>
+          </div>';
+    echo '<div class=imgdetail>
+            <img src="Images/' . $product["image"] . '" alt="' . $product["name"] . '" class="detail">
+          </div>';
+    echo '<div class="productprice">
+            <h2>&#8364;' . $product["price"] . '</h2>';
+    echo '<div class="descriptionheader">';
+    echo '<h3>Productomschrijving</h3>';
+    echo '<div class="description">';
+    echo  $product["description"];
+    echo '</div>';
+}
+          
+
 
 ?>
