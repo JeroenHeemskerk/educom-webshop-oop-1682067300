@@ -88,55 +88,40 @@ function updateUserPass($password) {
 }
 
 function selectProducts() {
-    $product_id = "";
-    $product_size = "";
-    $product_material = "";
-    /*
-    $properties_array = array('name' => "", 'value' => "", 'unit' => "");
-    $matterial_array = array('price' => "", 'properties' => $properties_array );
-    $size_array = array('Hars' => $matterial_array);
-
-    $products2 = array('id' => "", 'name' => "", 'description' => "",
-                     'sizes' => array($size_array));
-    */
-
-
-    $products = array('id' => "", 'name' => "", 'description' => "",
-                     'sizes' => ['S' =>['Hars' => ['price' => "", 'properties' => ['name' => "", 'value' => "", 'unit' => ""]],
-                                        'Koper' => ['price' => "", 'properties' => ['name' => "", 'value' => "", 'unit' => ""]]],
-                                 'M' =>['Hars' => ['price' => "", 'properties' => ['name' => "", 'value' => "", 'unit' => ""]],
-                                        'Koper' => ['price' => "", 'properties' => ['name' => "", 'value' => "", 'unit' => ""]]]]);
-
     $conn = connectToDB();
-    $sql = "SELECT p.id as 'product_id', p.name, p.description, p.image, s.id as 'size_id', s.size as 'size', m.id as 'material_id', m.material, pp.price
-            FROM product_price as pp
-            JOIN product_sizes as ps ON pp.product_size_id = ps.id
-            JOIN products as p ON ps.product_id = p.id
-            JOIN sizes as s on ps.size_id = s.id
-            JOIN materials as m on pp.material_id = m.id
-            order by p.id, m.id, s.display_order, m.display_order_mat";
+    $products=[];
 
-    $result = mysqli_query($conn, $sql); 
+    $sql = "SELECT id, name, image FROM products";
 
-    while($row = $result->fetch_assoc()) {
-        if ($product_id != $row['product_id']) {
-        $products['id'] = $row['product_id']
-         
-        // array('id' => $row['product_id'], 'name' => $row['name'], 'description' => $row['description'],
-        // 'sizes' => [$row['size_id'] =>['Hars' => ['price' => "", 'properties' => ['name' => "", 'value' => "", 'unit' => ""]],
-        //                    'Koper' => ['price' => "", 'properties' => ['name' => "", 'value' => "", 'unit' => ""]]],
-        //             'M' =>['Hars' => ['price' => "", 'properties' => ['name' => "", 'value' => "", 'unit' => ""]],
-        //                    'Koper' => ['price' => "", 'properties' => ['name' => "", 'value' => "", 'unit' => ""]]]]);
-        }
+    $result = mysqli_query($conn, $sql);
+
+    while($row = mysqli_fetch_assoc($result)) {
+        $products[$row['id']] = $row;
     }
+
+    $sql2 = "SELECT pp.id price_id, ps.product_id, s.id size_id, s.size, m.id material_id, m.material, price
+            FROM product_price as pp
+            JOIN product_sizes as ps
+            ON ps.id=pp.product_size_id
+            JOIN materials as m
+            ON m.id=pp.material_id
+            JOIN sizes as s
+            ON s.id=ps.size_id
+            order by ps.product_id, m.display_order_mat, s.display_order";
+
+    $result = mysqli_query($conn, $sql2);
+
+    while($row = mysqli_fetch_assoc($result)) {
+        $products[$row['product_id']]['flavours'][$row['price_id']] = $row;
+         
+        }
     
     mysqli_close($conn);
-    return $data['products'];
+    return $products;
 }
 
 function findProductByID($id) {
     $conn = connectToDB();
-    $id = getUrlVar('id');
     try {
         $id = mysqli_real_escape_string($conn, $id);
         $sql = "SELECT * FROM products WHERE id=$id";
