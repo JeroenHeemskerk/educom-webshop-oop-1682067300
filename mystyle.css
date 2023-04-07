@@ -80,3 +80,13 @@
 				span.error {
 					color:red;
 				}
+
+				div.productroster {
+					margin-bottom: 10px;
+					display: inline-block;
+					width: 300px;
+				}
+				div.products {
+					margin: auto;
+					width: 100%;
+				}
