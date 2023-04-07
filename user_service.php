@@ -36,5 +36,14 @@
     function getProducts(){
         $data = selectProducts();
         return $data;
-      }
+    }
+
+    function doesProductExist($id) {
+        $product = findProductByID($id);
+        if (empty($product)) {
+            return false;
+        } else {
+            return $product;
+        }
+    }
 ?>
