@@ -86,6 +86,7 @@
                 
     function showHeadSection($data) { // including the style sheet and the page titles
         echo "<head><link rel='stylesheet' href='mystyle.css'>";
+        echo '<script src="Scripts/website.js"></script>';
         echo '<title>';  
         switch($data['page']) 
             {
@@ -245,7 +246,10 @@
             case 'detail' :
                 require_once('webshop.php');
                 $id = getUrlVar("id");
-                showProductDetail($id);
+                $size = getUrlVar("size");
+                $material = getUrlVar("material");
+                $price = getUrlVar('price');
+                showProductDetail($id, $size, $material, $price);
                 break;
             default:
                 echo "ERROR, Page not found"; 
@@ -274,5 +278,12 @@
             $output = implode(',', $output);
         echo "<script>console.log('Debug Objects: " . $output . "' );</script>";
       }
+    
+    function generateKey($productId, $sizeId, $materialId =0, $priceId=0) {
+        if (is_array($sizeId)) {
+            return $productId . "_" . $sizeId['size_id'] . "_" . $sizeId['material_id'] . "_" . $sizeId['price_id'];   
+        }
+        return $productId . "_" . $sizeId . "_" . $materialId . "_" . $priceId;
+    }
 ?>        
                 

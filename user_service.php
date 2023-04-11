@@ -38,8 +38,8 @@
         return $data;
     }
 
-    function doesProductExist($id) {
-        $product = findProductByID($id);
+    function doesProductExist($productId, $sizeId, $materialId) {
+        $product = findProductByIdSizeAndMaterial($productId, $sizeId, $materialId);
         if (empty($product)) {
             return false;
         } else {
