@@ -1,6 +1,7 @@
 <?php
  include 'user_service.php';
 
+
  function validateRegister() /* validating register form */
  {
      
@@ -60,6 +61,8 @@ $valid = false; // declaring variables
 function validateContact()
 {
   
+    define('TITLE_OPTIONS', array("dhr" => 'Dhr', "mvr" =>  'Mvr', "OTHER" => 'Anders')); 
+    define('CONTACT_OPTIONS', array("telefoon" => 'per Telefoon', "mail" => 'per E-mail')); 
 
 $titleErr = $nameErr = $emailErr = $telefoonErr = $favcontactErr = $commentErr = "";
 $title = $name = $email = $telefoon = $favcontact = $comment = "";
