@@ -8,23 +8,23 @@ function showFormField($field, $label, $type, $data, $options = array(), $rows =
   echo '<br><label for="' . $field . '">' . $label . ' </label><br>' . PHP_EOL;
         if ($type == "select"){
             echo '<' . $type . ' id="' . $field . '" name="' . $field . '" ' . (empty($onChange) ? '' : 'onchange="' . $onChange . '"'). '>' . PHP_EOL;
-            showError($field, $data);
             foreach($options as $key => $title) {
                 echo '<option value="' . $key .'"'; if (isset($data[$field]) && $data[$field] == "$key") echo "selected"; echo'>' . $title . '</option>' . PHP_EOL;
             }   echo '</select>' . PHP_EOL;            
+            showError($field, $data);
         }   
         
         else if ($type == "radio") {
-            showError($field, $data);
             foreach ($options as $key => $contactoptions) {
-            echo  '<input type="radio" id="' . $field . $key . '" name="' . $field . '"'; if (isset($data[$field]) && $data[$field] == "$key") echo "checked"; echo' value="' . $key . '" > 
-                    <label for="' . $field . $key . '">' . $contactoptions . '</label><br>';
+                echo  '<input type="radio" id="' . $field . $key . '" name="' . $field . '"'; if (isset($data[$field]) && $data[$field] == "$key") echo "checked"; echo' value="' . $key . '" > 
+                <label for="' . $field . $key . '">' . $contactoptions . '</label><br>';
             }
+            showError($field, $data);
         } 
         
         else if ($type == "textarea") {
-            showError($field, $data);
             echo '<textarea name ="' . $field . '" rows="' . $rows . '" cols="' . $cols . '">' . $data[$field] . '</textarea><br><br>';
+            showError($field, $data);
             
         } else {
             echo '<input type="' . $type . '"id="' . $field . '" name="' . $field . '" value="' . $data[$field] . '"><br>' . PHP_EOL;
@@ -55,11 +55,11 @@ function showRegisterForm($data) { /* register form */
     showFormEnd('Registreren', 'register');
 }
 
-define('TITLE_OPTIONS', array("dhr" => 'Dhr', "mvr" =>  'Mvr', "OTHER" => 'Anders')); 
-define('CONTACT_OPTIONS', array("telefoon" => 'per Telefoon', "mail" => 'per E-mail')); 
-
 function showContactForm($data) { /* contact form */
-
+    
+    // define('TITLE_OPTIONS', array("dhr" => 'Dhr', "mvr" =>  'Mvr', "OTHER" => 'Anders')); 
+    // define('CONTACT_OPTIONS', array("telefoon" => 'per Telefoon', "mail" => 'per E-mail')); 
+    
     showFormStart();
     showFormField('title', 'Aanhef', 'select', $data, TITLE_OPTIONS);
     showFormField('name', 'Naam:', 'text', $data);
