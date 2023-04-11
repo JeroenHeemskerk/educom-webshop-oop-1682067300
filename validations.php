@@ -57,9 +57,6 @@ $valid = false; // declaring variables
 
 } 
 
-define('TITLE_OPTIONS', array("dhr" => 'Dhr', "mvr" =>  'Mvr', "OTHER" => 'Anders')); 
-define('CONTACT_OPTIONS', array("telefoon" => 'per Telefoon', "mail" => 'per E-mail'));
-
 function validateContact()
 {
   
