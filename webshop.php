@@ -28,20 +28,11 @@ function showProduct($key, $value){
     }
     showFormStart();
     showFormField('flavour', 'Keuze', 'select', $value, $options, null, null, "changeDetailLink(this.value)");
-    showFormEnd("bestel", "webshop");    
+    showFormField('quantity', 'Aantal', 'number', '' , $options , 1, 99);
+    showFormEnd("Toevoegen", "webshop");    
     echo '</div>';
     
 } 
-    // if ($price_id == "") {
-    //     $price_id = $flavour['price_id'];
-    // }
-    //  onchange="window.location=this.value"
-    // echo '<span class="error"> ' . $data['' . $field . 'Err'] . ' </span><br>' . PHP_EOL;            
-    // if (getUrlVar('pid') != "") { 
-    //     $price_id = getUrlVar('pid');
-    // }  
-    // echo '<h3>&#8364; ' . $value["flavours"][$price_id]["price"] . '</h3>';
-    // ' . $flavour['size_id'] . $flavour['material_id'] . $flavour['price_id'] .'
 
 function showProductDetail($id, $size, $material, $priceId) {
     $product = doesProductExist($id, $size, $material);

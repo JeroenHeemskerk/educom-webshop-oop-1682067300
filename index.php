@@ -9,7 +9,9 @@
     showResponsePage($data);
 
     function processRequest($page) {
-        include 'validations.php'; 
+        include 'validations.php';
+        
+         
         switch($page) {
             case 'contact':
                 $data = validateContact();
@@ -42,6 +44,13 @@
                     $page = 'home';
                 }
                 break;
+            case 'webshop':
+                handleAction();
+                $data = getProducts();
+                break;
+            case 'detail':
+                handleAction();
+                break;    
             }
         
         $data['page'] = $page;
@@ -116,6 +125,10 @@
                     require_once('webshop.php');
                     echo $head ;
                     break;
+                case 'shoppingcart' :
+                    require_once('shoppingcart.php');
+                    echo $head ;
+                    break;
                     
             }
         echo '</title></head>' ;   
@@ -166,6 +179,10 @@
                 require_once('webshop.php');
                 showWebshopHeader();
                 break;
+            case 'shoppingcart': 
+                require_once('shoppingcart.php');
+                showCartHeader();
+                break;
             case 'detail' :
                 require_once('webshop.php');
                 showWebshopHeader();
@@ -184,6 +201,7 @@
             $Menu['register'] = "Registreer";
             $Menu['login'] = "Log in";
         } else {
+            $Menu['shoppingcart'] = "Winkelmandje";
             $Menu['changepass'] = "Wachtwoord wijzigen"; 
             $Menu['logout'] = getLoggedInUserName() . " Uitloggen";
         }        
@@ -240,7 +258,6 @@
                 break;
             case 'webshop' :
                 require_once('webshop.php');
-                $data = getProducts();
                 showWebshopContent($data);
                 break;
             case 'detail' :
@@ -251,6 +268,10 @@
                 $price = getUrlVar('price');
                 showProductDetail($id, $size, $material, $price);
                 break;
+            case 'shoppingcart' :
+                require_once('shoppingcart.php');
+                showCartContent();
+                break;        
             default:
                 echo "ERROR, Page not found"; 
                 break;

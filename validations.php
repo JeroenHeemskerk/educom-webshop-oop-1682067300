@@ -1,5 +1,5 @@
 <?php
- include 'user_service.php';
+include 'user_service.php';
 
 
  function validateRegister() /* validating register form */
