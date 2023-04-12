@@ -46,4 +46,19 @@
             return $product;
         }
     }
+
+    function handleAction() {
+        $action = getPostVar("webshop");
+        if ($action == "Toevoegen") {
+            if (!isUserLoggedIn()) {
+            echo '<script>alert("FOUT: Om te bestellen moet u eerst inloggen")</script>';
+            } else {
+                $product = getPostVar("flavour");
+                $amount = getPostVar("quantity");
+                if ($amount > 0) {
+                    addToCart($amount, $product);
+                }
+            }
+        }
+    }
 ?>
