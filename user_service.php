@@ -34,8 +34,8 @@
     }
 
     function getProducts(){
-        $data = selectProducts();
-        return $data;
+        $products = selectProducts();
+        return $products;
     }
 
     function doesProductExist($productId, $sizeId, $materialId) {
@@ -54,6 +54,7 @@
             echo '<script>alert("FOUT: Om te bestellen moet u eerst inloggen")</script>';
             } else {
                 $product = getPostVar("flavour");
+                $product = explode("_", $product);
                 $amount = getPostVar("quantity");
                 if ($amount > 0) {
                     addToCart($amount, $product);

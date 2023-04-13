@@ -8,9 +8,9 @@ function showWebshopHeader() {
 }
 
 function showWebshopContent($products) {
-    foreach($products as $key => $value){ 
+    foreach($products['products'] as $key => $value) { 
         showProduct($key, $value);
-      }
+    }
 }
 
 function showProduct($key, $value){
