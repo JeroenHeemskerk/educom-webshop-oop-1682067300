@@ -9,7 +9,6 @@ function showCartHeader() {
 }
 
 function showCartContent() {
-$total = 0;
 $cartContent = getCartContent();
 var_dump($cartContent);
 }

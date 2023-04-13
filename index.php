@@ -49,7 +49,7 @@
                 $data['products'] = getProducts();
                 break;
             case 'detail':
-                // handleAction();
+                handleAction();
                 break;    
             }
         
