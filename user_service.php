@@ -53,11 +53,11 @@
             if (!isUserLoggedIn()) {
             echo '<script>alert("FOUT: Om te bestellen moet u eerst inloggen")</script>';
             } else {
-                $product = getPostVar("flavour");
-                $product = explode("_", $product);
+                $priceId = getPostVar("flavour");
+                $priceId = explode("_", $priceId);
                 $amount = getPostVar("quantity");
                 if ($amount > 0) {
-                    addToCart($amount, $product);
+                    updateCart($priceId[3], $amount);
                 }
             }
         }

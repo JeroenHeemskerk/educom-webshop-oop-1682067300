@@ -10,6 +10,14 @@ function showWebshopHeader() {
 function showWebshopContent($products) {
     foreach($products['products'] as $key => $value) { 
         showProduct($key, $value);
+        $options = array();
+        foreach($value['flavours'] as $key => $flavour) {
+            $options[generateKey($value['id'], $flavour)] = 'Maat: ' . $flavour['size'] . ', Materiaal: ' . $flavour['material'] . ', Prijs: &#8364;' . $flavour['price'];
+        }
+        showFormStart();
+        showFormField('flavour', 'Keuze', 'select', $value, $options, null, null, "changeDetailLink(this.value)");
+        showFormField('quantity', 'Aantal', 'number', '' , $options , 1, 99);
+        showFormEnd("Toevoegen", "webshop");
     }
 }
 
@@ -21,15 +29,7 @@ function showProduct($key, $value){
     echo '<a id="details_'.$value['id'].'" href="index.php?page=detail&id=' . $value["id"] . '&size='.$flavour['size_id'].'&material='.$flavour['material_id'].'&price='.$price_id.'">';
     echo '<img src="Images/'. $value["image"] . '" " alt="' . $value["name"] . '" class="img">';
     echo '<h2>' . $value["name"] . '</h2>';  
-    echo '</a>';
-    $options = array();
-    foreach($value['flavours'] as $key => $flavour) {
-        $options[generateKey($value['id'], $flavour)] = 'Maat: ' . $flavour['size'] . ', Materiaal: ' . $flavour['material'] . ', Prijs: &#8364;' . $flavour['price'];
-    }
-    showFormStart();
-    showFormField('flavour', 'Keuze', 'select', $value, $options, null, null, "changeDetailLink(this.value)");
-    showFormField('quantity', 'Aantal', 'number', '' , $options , 1, 99);
-    showFormEnd("Toevoegen", "webshop");    
+    echo '</a>';    
     echo '</div>';
     
 } 

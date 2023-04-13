@@ -28,6 +28,11 @@ function addToCart($priceId, $amount) {
     $_SESSION['cart'][$priceId] = $amount;
     }
 }
+
+function updateCart($priceId, $amount) {
+    $_SESSION['cart'][$priceId] = $amount;
+}
+
 function getCartContent(){
     return $_SESSION['cart'];
   }
