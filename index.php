@@ -46,10 +46,10 @@
                 break;
             case 'webshop':
                 handleAction();
-                $data = getProducts();
+                $data['products'] = getProducts();
                 break;
             case 'detail':
-                handleAction();
+                // handleAction();
                 break;    
             }
         
@@ -165,9 +165,6 @@
                 showContactHeader();
                 break;  
             case 'register' :
-                require_once('register.php');
-                showRegisterHeader();
-            case 'registerthanks' :
                 require_once('register.php');
                 showRegisterHeader();
                 break;
