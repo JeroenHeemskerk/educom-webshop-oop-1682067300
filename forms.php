@@ -27,7 +27,7 @@ function showFormField($field, $label, $type, $data, $options = array(), $rows =
             showError($field, $data);
         }
         else if ($type == "number") {
-            echo '<input type="number" name ="' . $field . '" min="' . $rows . '" max="' . $cols . '">';
+            echo '<input type="number" name ="' . $field . '" value="'.$data[$field].'" min="' . $rows . '" max="' . $cols . '">';
             
         } else {
             echo '<input type="' . $type . '"id="' . $field . '" name="' . $field . '" value="' . $data[$field] . '"><br>' . PHP_EOL;

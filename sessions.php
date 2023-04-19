@@ -39,7 +39,6 @@ function getCart(){
 
 function getCartContent() {
     $cart = getCart();
-    var_dump($cart);
     $products = fetchProductByPrizeId(array_keys($cart));
     $total = 0;
     $cartlines = array();
@@ -47,13 +46,11 @@ function getCartContent() {
         $product = $products[$priceId];
         $subtotal = $amount * $product['price'];
         $cartline = array('price_id' => $priceId, 'id' => $product['id'], 'amount' => $amount, 'name' => $product['name'], 'subtotal' => $subtotal,
-                          'price' => $product['price'], 'image' => $product['image']);
+                          'price' => $product['price'], 'image' => $product['image'], 'size_id' => $product['size_id'], 'material_id' => $product['material_id'], 
+                        'material' => $product['material']);
         $cartlines[] = $cartline;
-        var_dump($cartlines);
         $total += $subtotal;
     }
     return array('cartlines'=>$cartlines, 'total' => $total);
-
-
 }
 ?>
