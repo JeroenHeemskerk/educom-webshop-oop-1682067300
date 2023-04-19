@@ -172,22 +172,27 @@ function findProductByIdSizeAndMaterial($productId, $sizeId, $materialId) {
     }
 }
 
-function fetchProductByPrizeId() {
+function fetchProductByPrizeId($priceIds) {
     $conn = connectToDB();
+    $products= array();
+    $commaSeperatedList = implode(',', $priceIds);
+
     $sql = "SELECT p.id as 'id', p.name, p.image,s.id as 'size_id', s.size, m.id as 'material_id', m.material, pp.price
             FROM product_price as pp
             JOIN product_sizes as ps ON ps.id=pp.product_size_id
             JOIN materials as m ON m.id=pp.material_id
             JOIN products as p ON p.id=ps.product_id
             JOIN sizes as s ON s.id=ps.size_id
-            WHERE pp.id=";
+            WHERE pp.id IN ($commaSeperatedList)";
 
     $result = mysqli_query($conn, $sql);
 
+    $counter = 0;
     while ($row = mysqli_fetch_assoc($result)) {
-        $product = $row; 
+        $products[$priceIds[$counter]] = $row;
+        $counter++;
     }
-    return $product;
+    return $products;
     closeDB($conn);
 }
 
