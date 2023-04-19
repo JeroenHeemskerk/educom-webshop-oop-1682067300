@@ -50,7 +50,7 @@
                 break;
             case 'detail':
                 handleAction();
-                break;    
+                break;
             }
         
         $data['page'] = $page;
@@ -258,7 +258,7 @@
                 showWebshopContent($data);
                 break;
             case 'detail' :
-                require_once('webshop.php');
+                include('webshop.php');
                 $id = getUrlVar("id");
                 $size = getUrlVar("size");
                 $material = getUrlVar("material");

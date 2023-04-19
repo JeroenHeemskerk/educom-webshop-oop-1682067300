@@ -7,8 +7,8 @@ function showWebshopHeader() {
 
 }
 
-function showWebshopContent($products) {
-    foreach($products['products'] as $key => $value) { 
+function showWebshopContent($data) {
+    foreach($data['products'] as $key => $value) { 
         showProduct($key, $value);
         $options = array();
         foreach($value['flavours'] as $key => $flavour) {
@@ -16,8 +16,15 @@ function showWebshopContent($products) {
         }
         showFormStart();
         showFormField('flavour', 'Keuze', 'select', $value, $options, null, null, "changeDetailLink(this.value)");
-        showFormField('quantity', 'Aantal', 'number', '' , $options , 1, 99);
-        showFormEnd("Toevoegen", "webshop");
+        if (!isUserLoggedIn($_SESSION)) {
+            echo '</form><br>';
+        } else { 
+            showFormField('amount', 'Aantal', 'number', '' , $options , 1, 99);
+            echo '<br>';
+            showFormButton("Toevoegen", "webshop");
+            echo '<br>';  
+            showFormEnd();
+        }
     }
 }
 
@@ -27,14 +34,17 @@ function showProduct($key, $value){
     echo '<div class="products">';
     echo '<div class="productroster">';
     echo '<a id="details_'.$value['id'].'" href="index.php?page=detail&id=' . $value["id"] . '&size='.$flavour['size_id'].'&material='.$flavour['material_id'].'&price='.$price_id.'">';
-    echo '<img src="Images/'. $value["image"] . '" " alt="' . $value["name"] . '" class="img">';
-    echo '<h2>' . $value["name"] . '</h2>';  
-    echo '</a>';    
+    echo '<table><tr>';
+    echo '<td><img src="Images/'. $value["image"] . '" " alt="' . $value["name"] . '" class="img"></td>';
+    echo '<h2>' . $value["name"] . '</h2></tr>';  
+    echo '</table></a>';    
     echo '</div>';
     
 } 
 
 function showProductDetail($id, $size, $material, $priceId) {
+    $options = array();
+    $flavour["price"] = 0;
     $product = doesProductExist($id, $size, $material);
     if (!$product){
         echo "Product bestaat niet (meer)";
@@ -80,8 +90,20 @@ function showProductDetail($id, $size, $material, $priceId) {
         }
     }
     $onChange="window.location=makeDetailLink(this.value)";
-    showFormField('size', 'Maat:', 'select', $product, $sizeOptions, null, null, $onChange);
+    showFormStart();
+    showFormField('flavour', 'Maat:', 'select', $product, $sizeOptions, null, null, $onChange);
     showFormField('material', 'Materiaal', 'select', $product, $materialOptions, null, null, $onChange);
+    if (!isUserLoggedIn($_SESSION)) {
+        showFormEnd();
+        echo '<br>';
+    } else { 
+        echo '<br><input type="number" name="amount" min="1" max="99">';
+        // showFormField('quantity', 'Aantal', 'number', '' , $options , 1, 99);
+        echo '<br>';
+        showFormButton("Toevoegen", "detail");
+        showFormEnd();
+        echo '<br>';  
+    }
     echo '<div class="descriptionheader">';
     echo '<h3>Productomschrijving</h3>';
     echo '<div class="description">';

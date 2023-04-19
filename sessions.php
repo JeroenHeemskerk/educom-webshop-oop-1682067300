@@ -33,8 +33,27 @@ function updateCart($priceId, $amount) {
     $_SESSION['cart'][$priceId] = $amount;
 }
 
-function getCartContent(){
+function getCart(){
     return $_SESSION['cart'];
   }
 
+function getCartContent() {
+    $cart = getCart();
+    var_dump($cart);
+    $products = fetchProductByPrizeId(array_keys($cart));
+    $total = 0;
+    $cartlines = array();
+    foreach($cart as $priceId=>$amount) {
+        $product = $products[$priceId];
+        $subtotal = $amount * $product['price'];
+        $cartline = array('price_id' => $priceId, 'id' => $product['id'], 'amount' => $amount, 'name' => $product['name'], 'subtotal' => $subtotal,
+                          'price' => $product['price'], 'image' => $product['image']);
+        $cartlines[] = $cartline;
+        var_dump($cartlines);
+        $total += $subtotal;
+    }
+    return array('cartlines'=>$cartlines, 'total' => $total);
+
+
+}
 ?>
