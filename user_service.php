@@ -49,17 +49,23 @@
 
     function handleAction() {
         $action = getPostVar("webshop");
-        if ($action == "Toevoegen") {
-            if (!isUserLoggedIn()) {
-            echo '<script>alert("FOUT: Om te bestellen moet u eerst inloggen")</script>';
-            } else {
-                $priceId = getPostVar("flavour");
-                $priceId = explode("_", $priceId);
-                $amount = getPostVar("quantity");
+        switch($action) {
+            case "Toevoegen" :
+                $flavouredproduct = getPostVar("flavour");
+                $priceId = explode("_", $flavouredproduct);
+                $amount = getPostVar("amount");
                 if ($amount > 0) {
                     updateCart($priceId[3], $amount);
                 }
-            }
+                break;
+            case "Bestellen" :
+                $priceId = getPostVar("flavour");
+                    $priceId = explode("_", $priceId);
+                    $amount = getPostVar("quantity");
+                    if ($amount > 0) {
+                        updateCart($priceId, $amount);
+                    }
+                break;   
         }
     }
 ?>

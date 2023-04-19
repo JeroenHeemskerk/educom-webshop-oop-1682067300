@@ -41,11 +41,14 @@ function showError($field, $data) {
     }
 }
 
-function showFormEnd($submitButton, $page) {
+function showFormButton($submitButton, $page) {
     echo '<br>
           <input name="page" value="' . $page . '" type="hidden">';
     echo '<input type="submit" name="' . $page . '" value="' . $submitButton . '">';
-    echo '</form>';
+}
+
+function showFormEnd() {
+    echo '</form>'; 
 }
 
 function showRegisterForm($data) { /* register form */
@@ -55,7 +58,8 @@ function showRegisterForm($data) { /* register form */
     showFormField('name', 'Naam:' , 'text', $data);
     showFormField('password', 'Wachtwoord:', 'password', $data);
     showFormField('repeatpassword', 'Herhaal Wachtwoord', 'password', $data);
-    showFormEnd('Registreren', 'register');
+    showFormButton('Registreren', 'register');
+    showFormEnd();    
 }
 
 function showContactForm($data) { /* contact form */
@@ -70,14 +74,16 @@ function showContactForm($data) { /* contact form */
     showFormField('telefoon', 'Telefoonnummer', 'text', $data);
     showFormField('favcontact', 'Hoe wilt u gecontacteerd worden?', 'radio', $data, CONTACT_OPTIONS);
     showFormField('comment', 'Beschrijf in het kort de reden van contact:', 'textarea', $data);
-    showFormEnd('Versturen' , 'contact');
+    showFormButton('Versturen' , 'contact');
+    showFormEnd();
 }
 
 function showLoginForm($data) {
     showFormStart();
     showFormField('email', 'E-mail', 'text', $data);
     showFormField('password', 'Wachtwoord', 'password', $data);
-    showFormEnd('Login', 'login');
+    showFormButton('Login', 'login');
+    showFormEnd();
 }
 
 function showChangePassForm($data) {
@@ -85,7 +91,8 @@ function showChangePassForm($data) {
     showFormField('password', 'Huidig wachtwoord:', 'password', $data);
     showFormField('newpassword', 'Nieuw wachtwoord:', 'password', $data);
     showFormField('repeatnewpassword', 'Herhaal uw nieuwe wachtwoord:', 'password', $data);
-    showFormEnd('Veranderen', 'changepass');
+    showFormButton('Veranderen', 'changepass');
+    showFormEnd();
 } 
 
 ?>
