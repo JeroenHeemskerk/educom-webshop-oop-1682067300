@@ -58,14 +58,15 @@
                     updateCart($priceId[3], $amount);
                 }
                 break;
-            case "Bestellen" :
-                $priceId = getPostVar("flavour");
-                    $priceId = explode("_", $priceId);
-                    $amount = getPostVar("quantity");
-                    if ($amount > 0) {
-                        updateCart($priceId, $amount);
-                    }
+            case "updateQuantity" :
+                $updatedQuantity = getPostVar("amount");
+                $priceId = getPostVar("price_id");
+                if ($updatedQuantity == 0) {
+                    removeFromCart($priceId);
+                } else {
+                updateCart($priceId, $updatedQuantity);
                 break;   
-        }
-    }
+                }
+            }
+    }        
 ?>
