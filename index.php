@@ -183,10 +183,10 @@
                 require_once('shoppingcart.php');
                 showCartHeader();
                 break;
-            case 'detail' :
-                require_once('webshop.php');
-                showWebshopHeader();
-                break;
+            // case 'detail' :
+            //     require_once('webshop.php');
+            //     showWebshopHeader();
+            //     break;
 
 
         } 
