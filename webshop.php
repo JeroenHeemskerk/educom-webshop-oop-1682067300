@@ -8,6 +8,7 @@ function showWebshopHeader() {
 }
 
 function showWebshopContent($data) {
+    $onChange = "changeDetailLink(this.value)";
     foreach($data['products'] as $key => $value) { 
         showProduct($key, $value);
         $options = array();
@@ -15,15 +16,17 @@ function showWebshopContent($data) {
             $options[generateKey($value['id'], $flavour)] = 'Maat: ' . $flavour['size'] . ', Materiaal: ' . $flavour['material'] . ', Prijs: &#8364;' . $flavour['price'];
         }
         showFormStart();
-        showFormField('flavour', 'Keuze', 'select', $value, $options, null, null, "changeDetailLink(this.value)");
+        showFormField('flavour', 'Keuze', 'select', $value, $options, null, null, $onChange);
+        echo '<br>';
         if (!isUserLoggedIn($_SESSION)) {
             echo '</form><br>';
         } else { 
-            showFormField('amount', 'Aantal', 'number', '' , $options , 1, 99);
+            $data['amount'] = 1;
+            showFormField('amount', 'Aantal', 'number', $data , $options, 1, 99, null);
             echo '<br>';
             showFormButton("Toevoegen", "webshop");
             echo '<br>';  
-            showFormEnd();
+            showFormEnd("webshop");
         }
     }
 }
@@ -35,8 +38,8 @@ function showProduct($key, $value){
     echo '<div class="productroster">';
     echo '<a id="details_'.$value['id'].'" href="index.php?page=detail&id=' . $value["id"] . '&size='.$flavour['size_id'].'&material='.$flavour['material_id'].'&price='.$price_id.'">';
     echo '<table><tr>';
-    echo '<td><img src="Images/'. $value["image"] . '" " alt="' . $value["name"] . '" class="img"></td>';
-    echo '<h2>' . $value["name"] . '</h2></tr>';  
+    echo '<td><img src="Images/'. $value["image"] . '" " alt="' . $value["name"] . '" class="img"></td></tr>';
+    echo '<h2>' . $value["name"] . '</h2>';  
     echo '</table></a>';    
     echo '</div>';
     
@@ -94,14 +97,14 @@ function showProductDetail($id, $size, $material, $priceId) {
     showFormField('flavour', 'Maat:', 'select', $product, $sizeOptions, null, null, $onChange);
     showFormField('material', 'Materiaal', 'select', $product, $materialOptions, null, null, $onChange);
     if (!isUserLoggedIn($_SESSION)) {
-        showFormEnd();
+        showFormEnd("detail");
         echo '<br>';
     } else { 
-        echo '<br><input type="number" name="amount" min="1" max="99">';
-        // showFormField('quantity', 'Aantal', 'number', '' , $options , 1, 99);
+        echo '<br>';
+        showFormField('quantity', 'Aantal', 'number', '' , $options , 1, 99);
         echo '<br>';
         showFormButton("Toevoegen", "detail");
-        showFormEnd();
+        showFormEnd("detail");
         echo '<br>';  
     }
     echo '<div class="descriptionheader">';

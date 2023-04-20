@@ -186,7 +186,6 @@ function fetchProductByPrizeId($priceIds) {
             WHERE pp.id IN ($commaSeperatedList)";
 
     $result = mysqli_query($conn, $sql);
-
     $counter = 0;
     while ($row = mysqli_fetch_assoc($result)) {
         $products[$priceIds[$counter]] = $row;

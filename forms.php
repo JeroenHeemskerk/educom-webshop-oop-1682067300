@@ -1,11 +1,11 @@
 <?php
 
 function showFormStart() {
-    echo '<form method="post" action="index.php"';
+    echo '<form method="post" action="index.php">';
 }
 function showFormField($field, $label, $type, $data, $options = array(), $rows = NULL, $cols = NULL, $onChange=NULL) {
 
-  echo '<br><label for="' . $field . '">' . $label . ' </label><br>' . PHP_EOL;
+  echo '<label for="' . $field . '">' . $label . ' </label><br>' . PHP_EOL;
         if ($type == "select"){
             echo '<' . $type . ' id="' . $field . '" name="' . $field . '" ' . (empty($onChange) ? '' : 'onchange="' . $onChange . '"'). '>' . PHP_EOL;
             foreach($options as $key => $title) {
@@ -27,7 +27,7 @@ function showFormField($field, $label, $type, $data, $options = array(), $rows =
             showError($field, $data);
         }
         else if ($type == "number") {
-            echo '<input type="number" name ="' . $field . '" value="'.$data[$field].'" min="' . $rows . '" max="' . $cols . '">';
+            echo '<br><input type="number" name ="' . $field . '" value="'.$data[$field].'" min="' . $rows . '" max="' . $cols . '" onchange="' .$onChange. '">';
             
         } else {
             echo '<input type="' . $type . '"id="' . $field . '" name="' . $field . '" value="' . $data[$field] . '"><br>' . PHP_EOL;
@@ -42,12 +42,12 @@ function showError($field, $data) {
 }
 
 function showFormButton($submitButton, $page) {
-    echo '<br>
-          <input name="page" value="' . $page . '" type="hidden">';
+    
     echo '<input type="submit" name="' . $page . '" value="' . $submitButton . '">';
 }
 
-function showFormEnd() {
+function showFormEnd($page) {
+    echo '<br><input name="page" value="' . $page . '" type="hidden">';
     echo '</form>'; 
 }
 
@@ -59,7 +59,7 @@ function showRegisterForm($data) { /* register form */
     showFormField('password', 'Wachtwoord:', 'password', $data);
     showFormField('repeatpassword', 'Herhaal Wachtwoord', 'password', $data);
     showFormButton('Registreren', 'register');
-    showFormEnd();    
+    showFormEnd($data['page']);    
 }
 
 function showContactForm($data) { /* contact form */
@@ -75,7 +75,7 @@ function showContactForm($data) { /* contact form */
     showFormField('favcontact', 'Hoe wilt u gecontacteerd worden?', 'radio', $data, CONTACT_OPTIONS);
     showFormField('comment', 'Beschrijf in het kort de reden van contact:', 'textarea', $data);
     showFormButton('Versturen' , 'contact');
-    showFormEnd();
+    showFormEnd($data['page']);
 }
 
 function showLoginForm($data) {
@@ -83,7 +83,7 @@ function showLoginForm($data) {
     showFormField('email', 'E-mail', 'text', $data);
     showFormField('password', 'Wachtwoord', 'password', $data);
     showFormButton('Login', 'login');
-    showFormEnd();
+    showFormEnd($data['page']);
 }
 
 function showChangePassForm($data) {
@@ -92,7 +92,7 @@ function showChangePassForm($data) {
     showFormField('newpassword', 'Nieuw wachtwoord:', 'password', $data);
     showFormField('repeatnewpassword', 'Herhaal uw nieuwe wachtwoord:', 'password', $data);
     showFormButton('Veranderen', 'changepass');
-    showFormEnd();
+    showFormEnd($data['page']);
 } 
 
 ?>

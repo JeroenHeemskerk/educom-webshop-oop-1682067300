@@ -51,6 +51,9 @@
             case 'detail':
                 handleAction();
                 break;
+            case 'shoppingcart' :
+                handleAction();
+                break;            
             }
         
         $data['page'] = $page;
