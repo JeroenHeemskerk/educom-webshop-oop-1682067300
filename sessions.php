@@ -42,22 +42,24 @@ function getCart(){
 
 function getCartContent() {
     $cart = getCart();
-    if (empty($cartContent)) {
-        echo 'Uw winkelwagen is nog leeg. &#128532';
-    } else {
-    $products = fetchProductByPrizeId(array_keys($cart));
-    $total = 0;
-    $cartlines = array();
+    if ($cart != NULL) {
+        $products = fetchProductByPrizeId(array_keys($cart));
+        $total = 0;
+        $cartlines = array();
         foreach($cart as $priceId=>$amount) {
             $product = $products[$priceId];
             $subtotal = $amount * $product['price'];
             $cartline = array('price_id' => $priceId, 'id' => $product['id'], 'amount' => $amount, 'name' => $product['name'], 'subtotal' => $subtotal,
-                            'price' => $product['price'], 'image' => $product['image'], 'size_id' => $product['size_id'], 'material_id' => $product['material_id'], 
-                            'material' => $product['material']);
+            'price' => $product['price'], 'image' => $product['image'], 'size_id' => $product['size_id'], 'material_id' => $product['material_id'], 
+            'material' => $product['material']);
             $cartlines[] = $cartline;
             $total += $subtotal;
+            }
+            return array('cartlines'=>$cartlines, 'total' => $total);
+        } else {
+        echo 'Uw winkelwagen is nog leeg. &#128532';
         }
-        return array('cartlines'=>$cartlines, 'total' => $total);
+
     }
-}
+
 ?>
