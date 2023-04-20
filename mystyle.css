@@ -7,6 +7,11 @@
 				text-align:left; /*tekst links laten uitlijnen*/
 				color: rgb(60, 60, 60); /*donkergrijze kleur voor de tekst, rgb werkte beter dan simpelweg 'darkgrey'*/
 				font-size: 12px; /*tekst van 12pixels groot*/
+				}
+				div.webshopcontent {
+				text-align:left; /*tekst links laten uitlijnen*/
+				color: rgb(60, 60, 60); /*donkergrijze kleur voor de tekst, rgb werkte beter dan simpelweg 'darkgrey'*/
+				font-size: 12px; /*tekst van 12pixels groot*/
 				display:grid;
 				grid-template-columns: 1fr 1fr;
 				}
@@ -123,5 +128,9 @@
 				}
 				div.productroster {
 					width: 350px;
-					
 				}
+				img.img {
+					height:150px;
+					width: auto;
+					
+				}	

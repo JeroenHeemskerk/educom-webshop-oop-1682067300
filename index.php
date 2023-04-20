@@ -221,46 +221,54 @@
     }
     
     function showContent($data) { //showing page content
-        echo 	'<div class="content">';
         switch($data['page']) { 
             case 'home':
+                echo 	'<div class="content">';
                 require_once('home.php');
                 showHomeContent();
                 break;
             case 'about':
+                echo 	'<div class="content">';
                 require_once('about.php');
                 showAboutContent();
                 break;
             case 'contact':
+                echo 	'<div class="content">';
                 require_once('contact.php');
                 include 'forms.php';
                 echo 'Vul hier uw gegevens in:<br><br>';
                 showContactForm($data);
                 break;
             case 'register' :
+                echo 	'<div class="content">';
                 require_once('register.php');
                 include 'forms.php';
                 echo 'Vul hier uw gegevens in:<br><br>';
                 showRegisterForm($data);
                 break;
             case 'thanks' :
+                echo 	'<div class="content">';
                 require_once('contact.php');
                 showContactThanks($data);
                 break;         
             case 'login' :
+                echo 	'<div class="content">';
                 require_once ('login.php');
                 include 'forms.php';
                 showLoginForm($data);
                 break;
             case 'changepass' :
+                echo 	'<div class="content">';
                 include 'forms.php';
                 showChangePassForm($data);
                 break;
             case 'webshop' :
+                echo 	'<div class="webshopcontent">';
                 require_once('webshop.php');
                 showWebshopContent($data);
                 break;
             case 'detail' :
+                echo 	'<div class="content">';
                 include('webshop.php');
                 $id = getUrlVar("id");
                 $size = getUrlVar("size");
@@ -269,10 +277,12 @@
                 showProductDetail($id, $size, $material, $price);
                 break;
             case 'shoppingcart' :
+                echo 	'<div class="content">';
                 require_once('shoppingcart.php');
                 showCartContent();
                 break;        
             default:
+            echo 	'<div class="content">';
                 echo "ERROR, Page not found"; 
                 break;
                     
