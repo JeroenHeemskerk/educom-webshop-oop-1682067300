@@ -1,7 +1,7 @@
 <?php
 
-function showFormStart() {
-    echo '<form method="post" action="index.php">';
+function showFormStart($field) {
+    echo '<form method="post" action="index.php" id="'.$field.'">';
 }
 function showFormField($field, $label, $type, $data, $options = array(), $rows = NULL, $cols = NULL, $onChange=NULL) {
 
@@ -27,7 +27,7 @@ function showFormField($field, $label, $type, $data, $options = array(), $rows =
             showError($field, $data);
         }
         else if ($type == "number") {
-            echo '<br><input type="number" name ="' . $field . '" value="'.$data[$field].'" min="' . $rows . '" max="' . $cols . '" onchange="' .$onChange. '">';
+            echo '<br><input type="number" id="'.$field.'" name ="' . $field . '" value="'.$data[$field].'" min="' . $rows . '" max="' . $cols . '" onchange="' .$onChange. '">';
             
         } else {
             echo '<input type="' . $type . '"id="' . $field . '" name="' . $field . '" value="' . $data[$field] . '"><br>' . PHP_EOL;
@@ -53,7 +53,7 @@ function showFormEnd($page) {
 
 function showRegisterForm($data) { /* register form */
 
-    showFormStart();
+    showFormStart('register');
     showFormField('email', 'E-mail:', 'email', $data);
     showFormField('name', 'Naam:' , 'text', $data);
     showFormField('password', 'Wachtwoord:', 'password', $data);
@@ -67,7 +67,7 @@ function showContactForm($data) { /* contact form */
     // define('TITLE_OPTIONS', array("dhr" => 'Dhr', "mvr" =>  'Mvr', "OTHER" => 'Anders')); 
     // define('CONTACT_OPTIONS', array("telefoon" => 'per Telefoon', "mail" => 'per E-mail')); 
     
-    showFormStart();
+    showFormStart('contact');
     showFormField('title', 'Aanhef', 'select', $data, TITLE_OPTIONS);
     showFormField('name', 'Naam:', 'text', $data);
     showFormField('email', 'E-mail:', 'email', $data);
@@ -79,7 +79,7 @@ function showContactForm($data) { /* contact form */
 }
 
 function showLoginForm($data) {
-    showFormStart();
+    showFormStart('login');
     showFormField('email', 'E-mail', 'text', $data);
     showFormField('password', 'Wachtwoord', 'password', $data);
     showFormButton('Login', 'login');
@@ -87,7 +87,7 @@ function showLoginForm($data) {
 }
 
 function showChangePassForm($data) {
-    showFormStart();
+    showFormStart('changepass');
     showFormField('password', 'Huidig wachtwoord:', 'password', $data);
     showFormField('newpassword', 'Nieuw wachtwoord:', 'password', $data);
     showFormField('repeatnewpassword', 'Herhaal uw nieuwe wachtwoord:', 'password', $data);

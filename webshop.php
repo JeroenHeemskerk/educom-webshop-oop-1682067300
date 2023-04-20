@@ -10,12 +10,13 @@ function showWebshopHeader() {
 function showWebshopContent($data) {
     $onChange = "changeDetailLink(this.value)";
     foreach($data['products'] as $key => $value) { 
+        echo '<div class="productroster">';
         showProduct($key, $value);
         $options = array();
         foreach($value['flavours'] as $key => $flavour) {
             $options[generateKey($value['id'], $flavour)] = 'Maat: ' . $flavour['size'] . ', Materiaal: ' . $flavour['material'] . ', Prijs: &#8364;' . $flavour['price'];
         }
-        showFormStart();
+        showFormStart('product');
         showFormField('flavour', 'Keuze', 'select', $value, $options, null, null, $onChange);
         echo '<br>';
         if (!isUserLoggedIn($_SESSION)) {
@@ -28,20 +29,18 @@ function showWebshopContent($data) {
             echo '<br>';  
             showFormEnd("webshop");
         }
+        echo '</div>';
     }
 }
 
 function showProduct($key, $value){
     $price_id = key($value['flavours']);
     $flavour = $value['flavours'][$price_id];
-    echo '<div class="products">';
-    echo '<div class="productroster">';
     echo '<a id="details_'.$value['id'].'" href="index.php?page=detail&id=' . $value["id"] . '&size='.$flavour['size_id'].'&material='.$flavour['material_id'].'&price='.$price_id.'">';
-    echo '<table><tr>';
-    echo '<td><img src="Images/'. $value["image"] . '" " alt="' . $value["name"] . '" class="img"></td></tr>';
-    echo '<h2>' . $value["name"] . '</h2>';  
-    echo '</table></a>';    
-    echo '</div>';
+    // echo '<table><tr>';
+    echo '<h2 id="producttitle">' . $value["name"] . '</h2>';  
+    echo '<td class="productroster"><img src="Images/'. $value["image"] . '" " alt="' . $value["name"] . '" class="img">';
+    echo '</a>';    
     
 } 
 
@@ -94,7 +93,7 @@ function showProductDetail($id, $size, $material, $priceId) {
         }
     }
     $onChange="window.location=makeDetailLink(this.value)";
-    showFormStart();
+    showFormStart('product');
     showFormField('flavour', 'Maat:', 'select', $product, $sizeOptions, null, null, $onChange);
     showFormField('material', 'Materiaal', 'select', $product, $materialOptions, null, null, $onChange);
     if (!isUserLoggedIn($_SESSION)) {
