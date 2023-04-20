@@ -61,11 +61,11 @@
             case "updateQuantity" :
                 $updatedQuantity = getPostVar("amount");
                 $priceId = getPostVar("price_id");
-                if ($updatedQuantity == 0) {
-                    removeFromCart($priceId);
+                if ($updatedQuantity != 0) {
+                    updateCart($priceId, $updatedQuantity);
                 } else {
-                updateCart($priceId, $updatedQuantity);
-                break;   
+                    removeFromCart($priceId);
+                    break;   
                 }
             }
     }        
