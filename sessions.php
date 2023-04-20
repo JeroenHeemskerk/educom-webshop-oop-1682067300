@@ -59,7 +59,9 @@ function getCartContent() {
         } else {
         echo 'Uw winkelwagen is nog leeg. &#128532';
         }
+}
 
-    }
-
+function emptyCart() {
+    $_SESSION['cart'] = array();
+}
 ?>

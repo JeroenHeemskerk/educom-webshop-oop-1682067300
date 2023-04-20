@@ -195,5 +195,48 @@ function fetchProductByPrizeId($priceIds) {
     closeDB($conn);
 }
 
+function storeOrder($user_id, $cartContent) {
+    $conn = connectToDB();
+    
+    try {
+        $sql = "INSERT INTO invoice (date, user_id) VALUE(CURRENT_DATE(),'$user_id')";
+        $result = mysqli_query($conn, $sql);
+        if(!$result){
+        throw new Exception("storeOrder failed, sql: " . $sql . ", error: " . mysqli_error($conn));
+        }
 
+        $last_id = mysqli_insert_id($conn);
+        foreach($cartContent as $key=>$value){
+        $sql = "INSERT INTO invoice_row (invoice_id, product_price_id, amount) VALUES($last_id, $key, $value)";
+        mysqli_query($conn, $sql);
+        }
+
+    } finally {
+  closeDB($conn);  
+  }
+}
+
+function retrieveOrderHistoryByUserId($user_id) {
+
+    $sql = "SELECT invoice.id, invoice.date, sum(product_price.price* 100 * amount) / 100 as 'total', COUNT(invoice_row.id) as 'nrOfProducts', SUM(invoice_row.amount) AS 'nrOfFigurines'
+            FROM `invoice_row` 
+            JOIN `invoice` ON invoice.id=invoice_row.invoice_id
+            JOIN `product_price` ON product_price.id = invoice_row.product_price_id
+
+            WHERE invoice.user_id = $user_id
+            GROUP BY invoice.id";
+}
+
+
+function readInvoiceDataByInvoiceId($invoiceId) {
+    $sql = "SELECT invoice_row.id, amount, invoice.user_id, invoice.date, product_price.price, materials.material, sizes.size, products.name
+            FROM `invoice_row` 
+            JOIN `invoice` ON invoice.id=invoice_row.invoice_id
+            JOIN `product_price` ON product_price.id = invoice_row.product_price_id
+            JOIN `materials` ON materials.id = product_price.material_id
+            JOIN `product_sizes` ON product_sizes.id = product_price.product_size_id
+            JOIN `sizes` ON sizes.id = product_sizes.size_id
+            JOIN `products` ON products.id = product_sizes.product_id
+            WHERE invoice.id=$invoiceId";
+}
 ?>
