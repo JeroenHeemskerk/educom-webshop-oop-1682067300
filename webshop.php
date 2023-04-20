@@ -49,6 +49,7 @@ function showProductDetail($id, $size, $material, $priceId) {
     $options = array();
     $flavour["price"] = 0;
     $product = doesProductExist($id, $size, $material);
+    $product['amount'] = 1;
     if (!$product){
         echo "Product bestaat niet (meer)";
         return;
@@ -101,7 +102,7 @@ function showProductDetail($id, $size, $material, $priceId) {
         echo '<br>';
     } else { 
         echo '<br>';
-        showFormField('quantity', 'Aantal', 'number', '' , $options , 1, 99);
+        showFormField('amount', 'Aantal', 'number', $product , $options , 1, 99, NULL);
         echo '<br>';
         showFormButton("Toevoegen", "detail");
         showFormEnd("detail");
