@@ -7,6 +7,8 @@
 				text-align:left; /*tekst links laten uitlijnen*/
 				color: rgb(60, 60, 60); /*donkergrijze kleur voor de tekst, rgb werkte beter dan simpelweg 'darkgrey'*/
 				font-size: 12px; /*tekst van 12pixels groot*/
+				display:grid;
+				grid-template-columns: 1fr 1fr;
 				}
 				#menu {
 				position:fixed; /*zodat je altijd bij het menu een andere pagina kan selecteren ipv weer omhoog te scrollen*/
@@ -93,7 +95,7 @@
 					border-style: solid;
 					border-width: 1px;
 					border-spacing: 5px;
-					width: 60%;
+					width: 300px;
 					padding-bottom: 2%;
 					height: 120px;
 					margin-bottom: 40px;
@@ -101,8 +103,25 @@
 				}
 				a {
 					text-decoration: none;
+					width: 300px;
 				}
 				
 				td.cart {
 					height: 100px;
+				}
+				td.productroster {
+					width:300px;
+				}
+				#product {
+					width:350px;
+				}
+				#producttitle {
+					width:350px;
+				}
+				#amount {
+					width: 30px;
+				}
+				div.productroster {
+					width: 350px;
+					
 				}
