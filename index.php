@@ -270,11 +270,20 @@
             case 'detail' :
                 echo 	'<div class="content">';
                 include('webshop.php');
+                if ( $_SERVER['REQUEST_METHOD']== "POST") {
+                $productflavour = getPostVar("flavour");
+                $product = explode('_', $productflavour );
+                $id = $product[0];
+                $size = $product[1];
+                $material = $product[2];
+                $priceId = $product[3];
+                } else {
                 $id = getUrlVar("id");
                 $size = getUrlVar("size");
                 $material = getUrlVar("material");
-                $price = getUrlVar('price');
-                showProductDetail($id, $size, $material, $price);
+                $priceId = getUrlVar('price');
+                }
+                showProductDetail($id, $size, $material, $priceId);
                 break;
             case 'shoppingcart' :
                 echo 	'<div class="content">';

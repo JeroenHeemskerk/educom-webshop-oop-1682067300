@@ -11,7 +11,6 @@ function showCartHeader() {
 function showCartContent() {
    
 $cartContent = getCartContent();
-$total = 0;
 $onChange = "(this).closest('form').submit()";
 
 $cartline['webshop'] = "updateQuantity";
@@ -35,8 +34,10 @@ foreach($cartContent['cartlines'] as $key=>$product) {
             echo '</table>';
             echo '</div>';
     }
-    
     echo 'Totaal prijs = &#8364;'.number_format((float)$cartContent['total'], 2, '.'. '').'';
+    showFormStart('orderbutton');
+    showFormButton('Bestellen', 'action');
+    showFormEnd('webshop');
 }
 }
 

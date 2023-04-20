@@ -48,14 +48,14 @@
     }
 
     function handleAction() {
-        $action = getPostVar("webshop");
+        $action = getPostVar("action");
         switch($action) {
             case "Toevoegen" :
                 $flavouredproduct = getPostVar("flavour");
                 $priceId = explode("_", $flavouredproduct);
                 $amount = getPostVar("amount");
                 if ($amount > 0) {
-                    updateCart($priceId[3], $amount);
+                    addToCart($priceId[3], $amount);
                 }
                 break;
             case "updateQuantity" :
@@ -65,8 +65,23 @@
                     updateCart($priceId, $updatedQuantity);
                 } else {
                     removeFromCart($priceId);
-                    break;   
                 }
+                break;
+            case "Bestellen" :
+                $user_id = getLoggedInID("id");
+                $cartContent = getCart();
+                if($cartContent)
+                saveOrder($user_id, $cartContent);
+                break;
+                       
             }
-    }        
+    } 
+    
+    function saveOrder($user_id, $cartContent) {
+        try{
+            storeOrder($user_id, $cartContent);
+            emptyCart();
+        } catch (Exception $e) {
+        }
+    }
 ?>

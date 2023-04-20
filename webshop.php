@@ -25,7 +25,7 @@ function showWebshopContent($data) {
             $data['amount'] = 1;
             showFormField('amount', 'Aantal', 'number', $data , $options, 1, 99, null);
             echo '<br>';
-            showFormButton("Toevoegen", "webshop");
+            showFormButton("Toevoegen", "action");
             echo '<br>';  
             showFormEnd("webshop");
         }
@@ -103,7 +103,7 @@ function showProductDetail($id, $size, $material, $priceId) {
         echo '<br>';
         showFormField('amount', 'Aantal', 'number', $product , $options , 1, 99, NULL);
         echo '<br>';
-        showFormButton("Toevoegen", "detail");
+        showFormButton("Toevoegen", "action");
         showFormEnd("detail");
         echo '<br>';  
     }

@@ -41,9 +41,9 @@ function showError($field, $data) {
     }
 }
 
-function showFormButton($submitButton, $page) {
+function showFormButton($submitButton, $action) {
     
-    echo '<input type="submit" name="' . $page . '" value="' . $submitButton . '">';
+    echo '<input type="submit" name="' . $action . '" value="' . $submitButton . '">';
 }
 
 function showFormEnd($page) {
@@ -58,7 +58,7 @@ function showRegisterForm($data) { /* register form */
     showFormField('name', 'Naam:' , 'text', $data);
     showFormField('password', 'Wachtwoord:', 'password', $data);
     showFormField('repeatpassword', 'Herhaal Wachtwoord', 'password', $data);
-    showFormButton('Registreren', 'register');
+    showFormButton('Registreren', 'action');
     showFormEnd($data['page']);    
 }
 
@@ -74,7 +74,7 @@ function showContactForm($data) { /* contact form */
     showFormField('telefoon', 'Telefoonnummer', 'text', $data);
     showFormField('favcontact', 'Hoe wilt u gecontacteerd worden?', 'radio', $data, CONTACT_OPTIONS);
     showFormField('comment', 'Beschrijf in het kort de reden van contact:', 'textarea', $data);
-    showFormButton('Versturen' , 'contact');
+    showFormButton('Versturen' , 'action');
     showFormEnd($data['page']);
 }
 
@@ -82,7 +82,7 @@ function showLoginForm($data) {
     showFormStart('login');
     showFormField('email', 'E-mail', 'text', $data);
     showFormField('password', 'Wachtwoord', 'password', $data);
-    showFormButton('Login', 'login');
+    showFormButton('Login', 'action');
     showFormEnd($data['page']);
 }
 
@@ -91,7 +91,7 @@ function showChangePassForm($data) {
     showFormField('password', 'Huidig wachtwoord:', 'password', $data);
     showFormField('newpassword', 'Nieuw wachtwoord:', 'password', $data);
     showFormField('repeatnewpassword', 'Herhaal uw nieuwe wachtwoord:', 'password', $data);
-    showFormButton('Veranderen', 'changepass');
+    showFormButton('Veranderen', 'action');
     showFormEnd($data['page']);
 } 
 
