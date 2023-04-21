@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 07, 2023 at 10:53 AM
--- Server version: 10.4.27-MariaDB
--- PHP Version: 8.2.0
+-- Gegenereerd op: 21 apr 2023 om 09:39
+-- Serverversie: 10.4.27-MariaDB
+-- PHP-versie: 8.2.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,7 +24,56 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `materials`
+-- Tabelstructuur voor tabel `invoice`
+--
+
+CREATE TABLE `invoice` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `date` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Gegevens worden geëxporteerd voor tabel `invoice`
+--
+
+INSERT INTO `invoice` (`id`, `user_id`, `date`) VALUES
+(4, 3, '2023-04-20'),
+(5, 3, '2023-04-20'),
+(6, 3, '2023-04-20'),
+(7, 3, '2023-04-20');
+
+-- --------------------------------------------------------
+
+--
+-- Tabelstructuur voor tabel `invoice_row`
+--
+
+CREATE TABLE `invoice_row` (
+  `id` int(11) NOT NULL,
+  `invoice_id` int(11) NOT NULL,
+  `product_price_id` int(11) NOT NULL,
+  `amount` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Gegevens worden geëxporteerd voor tabel `invoice_row`
+--
+
+INSERT INTO `invoice_row` (`id`, `invoice_id`, `product_price_id`, `amount`) VALUES
+(1, 4, 22, 4),
+(2, 4, 32, 3),
+(3, 5, 22, 4),
+(4, 6, 28, 1),
+(5, 6, 26, 1),
+(6, 6, 35, 1),
+(7, 7, 22, 5),
+(8, 7, 24, 2);
+
+-- --------------------------------------------------------
+
+--
+-- Tabelstructuur voor tabel `materials`
 --
 
 CREATE TABLE `materials` (
@@ -34,7 +83,7 @@ CREATE TABLE `materials` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
--- Dumping data for table `materials`
+-- Gegevens worden geëxporteerd voor tabel `materials`
 --
 
 INSERT INTO `materials` (`id`, `material`, `display_order_mat`) VALUES
@@ -44,7 +93,7 @@ INSERT INTO `materials` (`id`, `material`, `display_order_mat`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `products`
+-- Tabelstructuur voor tabel `products`
 --
 
 CREATE TABLE `products` (
@@ -55,7 +104,7 @@ CREATE TABLE `products` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
--- Dumping data for table `products`
+-- Gegevens worden geëxporteerd voor tabel `products`
 --
 
 INSERT INTO `products` (`id`, `name`, `image`, `description`) VALUES
@@ -68,7 +117,7 @@ INSERT INTO `products` (`id`, `name`, `image`, `description`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `product_price`
+-- Tabelstructuur voor tabel `product_price`
 --
 
 CREATE TABLE `product_price` (
@@ -79,7 +128,7 @@ CREATE TABLE `product_price` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
--- Dumping data for table `product_price`
+-- Gegevens worden geëxporteerd voor tabel `product_price`
 --
 
 INSERT INTO `product_price` (`id`, `product_size_id`, `material_id`, `price`) VALUES
@@ -87,7 +136,7 @@ INSERT INTO `product_price` (`id`, `product_size_id`, `material_id`, `price`) VA
 (23, 2, 1, '12.99'),
 (24, 1, 2, '14.95'),
 (25, 2, 2, '19.95'),
-(26, 3, 1, '9.99'),
+(26, 3, 1, '9.98'),
 (27, 4, 1, '12.99'),
 (28, 3, 2, '14.95'),
 (29, 4, 2, '19.95'),
@@ -107,7 +156,7 @@ INSERT INTO `product_price` (`id`, `product_size_id`, `material_id`, `price`) VA
 -- --------------------------------------------------------
 
 --
--- Table structure for table `product_properties`
+-- Tabelstructuur voor tabel `product_properties`
 --
 
 CREATE TABLE `product_properties` (
@@ -119,7 +168,7 @@ CREATE TABLE `product_properties` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
--- Dumping data for table `product_properties`
+-- Gegevens worden geëxporteerd voor tabel `product_properties`
 --
 
 INSERT INTO `product_properties` (`id`, `product_size_id`, `property_id`, `value`, `product_price_id`) VALUES
@@ -142,12 +191,32 @@ INSERT INTO `product_properties` (`id`, `product_size_id`, `property_id`, `value
 (23, 3, 2, 25, NULL),
 (24, 5, 2, 25, NULL),
 (25, 7, 2, 25, NULL),
-(26, 9, 2, 25, NULL);
+(26, 9, 2, 25, NULL),
+(29, 1, 3, 240, 22),
+(30, 3, 3, 240, 26),
+(31, 5, 3, 240, 30),
+(32, 7, 3, 240, 34),
+(33, 9, 3, 240, 38),
+(36, 2, 3, 412, 23),
+(37, 4, 3, 412, 27),
+(38, 6, 3, 412, 31),
+(39, 8, 3, 412, 35),
+(40, 10, 3, 412, 39),
+(43, 2, 3, 1610, 25),
+(44, 4, 3, 1610, 29),
+(45, 6, 3, 1610, 33),
+(46, 8, 3, 1610, 37),
+(47, 10, 3, 1610, 41),
+(50, 1, 3, 561, 24),
+(51, 3, 3, 561, 28),
+(52, 5, 3, 561, 32),
+(53, 7, 3, 561, 36),
+(54, 9, 3, 561, 40);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `product_sizes`
+-- Tabelstructuur voor tabel `product_sizes`
 --
 
 CREATE TABLE `product_sizes` (
@@ -157,7 +226,7 @@ CREATE TABLE `product_sizes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
--- Dumping data for table `product_sizes`
+-- Gegevens worden geëxporteerd voor tabel `product_sizes`
 --
 
 INSERT INTO `product_sizes` (`id`, `product_id`, `size_id`) VALUES
@@ -175,7 +244,7 @@ INSERT INTO `product_sizes` (`id`, `product_id`, `size_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `properties`
+-- Tabelstructuur voor tabel `properties`
 --
 
 CREATE TABLE `properties` (
@@ -185,7 +254,7 @@ CREATE TABLE `properties` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
--- Dumping data for table `properties`
+-- Gegevens worden geëxporteerd voor tabel `properties`
 --
 
 INSERT INTO `properties` (`id`, `name`, `unit`) VALUES
@@ -196,7 +265,7 @@ INSERT INTO `properties` (`id`, `name`, `unit`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `sizes`
+-- Tabelstructuur voor tabel `sizes`
 --
 
 CREATE TABLE `sizes` (
@@ -206,7 +275,7 @@ CREATE TABLE `sizes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
--- Dumping data for table `sizes`
+-- Gegevens worden geëxporteerd voor tabel `sizes`
 --
 
 INSERT INTO `sizes` (`id`, `size`, `display_order`) VALUES
@@ -218,7 +287,7 @@ INSERT INTO `sizes` (`id`, `size`, `display_order`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users`
+-- Tabelstructuur voor tabel `users`
 --
 
 CREATE TABLE `users` (
@@ -229,7 +298,7 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
--- Dumping data for table `users`
+-- Gegevens worden geëxporteerd voor tabel `users`
 --
 
 INSERT INTO `users` (`ID`, `email`, `name`, `password`) VALUES
@@ -240,23 +309,38 @@ INSERT INTO `users` (`ID`, `email`, `name`, `password`) VALUES
 (10, 'test3@account.nl', 'tester3', '1234');
 
 --
--- Indexes for dumped tables
+-- Indexen voor geëxporteerde tabellen
 --
 
 --
--- Indexes for table `materials`
+-- Indexen voor tabel `invoice`
+--
+ALTER TABLE `invoice`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `invoice_ibfk_1` (`user_id`);
+
+--
+-- Indexen voor tabel `invoice_row`
+--
+ALTER TABLE `invoice_row`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `invoice_row_ibfk_1` (`invoice_id`),
+  ADD KEY `invoice_row_ibfk_2` (`product_price_id`);
+
+--
+-- Indexen voor tabel `materials`
 --
 ALTER TABLE `materials`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `products`
+-- Indexen voor tabel `products`
 --
 ALTER TABLE `products`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `product_price`
+-- Indexen voor tabel `product_price`
 --
 ALTER TABLE `product_price`
   ADD PRIMARY KEY (`id`),
@@ -264,7 +348,7 @@ ALTER TABLE `product_price`
   ADD KEY `material_id` (`material_id`);
 
 --
--- Indexes for table `product_properties`
+-- Indexen voor tabel `product_properties`
 --
 ALTER TABLE `product_properties`
   ADD PRIMARY KEY (`id`),
@@ -273,7 +357,7 @@ ALTER TABLE `product_properties`
   ADD KEY `product_price_id` (`product_price_id`);
 
 --
--- Indexes for table `product_sizes`
+-- Indexen voor tabel `product_sizes`
 --
 ALTER TABLE `product_sizes`
   ADD PRIMARY KEY (`id`),
@@ -281,82 +365,107 @@ ALTER TABLE `product_sizes`
   ADD KEY `size_id` (`size_id`);
 
 --
--- Indexes for table `properties`
+-- Indexen voor tabel `properties`
 --
 ALTER TABLE `properties`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `sizes`
+-- Indexen voor tabel `sizes`
 --
 ALTER TABLE `sizes`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `users`
+-- Indexen voor tabel `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`ID`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT voor geëxporteerde tabellen
 --
 
 --
--- AUTO_INCREMENT for table `materials`
+-- AUTO_INCREMENT voor een tabel `invoice`
+--
+ALTER TABLE `invoice`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT voor een tabel `invoice_row`
+--
+ALTER TABLE `invoice_row`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT voor een tabel `materials`
 --
 ALTER TABLE `materials`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT for table `products`
+-- AUTO_INCREMENT voor een tabel `products`
 --
 ALTER TABLE `products`
   MODIFY `id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT for table `product_price`
+-- AUTO_INCREMENT voor een tabel `product_price`
 --
 ALTER TABLE `product_price`
   MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
--- AUTO_INCREMENT for table `product_properties`
+-- AUTO_INCREMENT voor een tabel `product_properties`
 --
 ALTER TABLE `product_properties`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
 
 --
--- AUTO_INCREMENT for table `product_sizes`
+-- AUTO_INCREMENT voor een tabel `product_sizes`
 --
 ALTER TABLE `product_sizes`
   MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- AUTO_INCREMENT for table `properties`
+-- AUTO_INCREMENT voor een tabel `properties`
 --
 ALTER TABLE `properties`
   MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `users`
+-- AUTO_INCREMENT voor een tabel `users`
 --
 ALTER TABLE `users`
   MODIFY `ID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- Constraints for dumped tables
+-- Beperkingen voor geëxporteerde tabellen
 --
 
 --
--- Constraints for table `product_price`
+-- Beperkingen voor tabel `invoice`
+--
+ALTER TABLE `invoice`
+  ADD CONSTRAINT `invoice_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`ID`) ON DELETE CASCADE;
+
+--
+-- Beperkingen voor tabel `invoice_row`
+--
+ALTER TABLE `invoice_row`
+  ADD CONSTRAINT `invoice_row_ibfk_1` FOREIGN KEY (`invoice_id`) REFERENCES `invoice` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `invoice_row_ibfk_2` FOREIGN KEY (`product_price_id`) REFERENCES `product_price` (`id`) ON DELETE CASCADE;
+
+--
+-- Beperkingen voor tabel `product_price`
 --
 ALTER TABLE `product_price`
   ADD CONSTRAINT `product_price_ibfk_1` FOREIGN KEY (`material_id`) REFERENCES `materials` (`id`),
   ADD CONSTRAINT `product_price_ibfk_2` FOREIGN KEY (`product_size_id`) REFERENCES `product_sizes` (`id`);
 
 --
--- Constraints for table `product_properties`
+-- Beperkingen voor tabel `product_properties`
 --
 ALTER TABLE `product_properties`
   ADD CONSTRAINT `product_properties_ibfk_2` FOREIGN KEY (`product_size_id`) REFERENCES `product_sizes` (`id`),
@@ -364,7 +473,7 @@ ALTER TABLE `product_properties`
   ADD CONSTRAINT `product_properties_ibfk_4` FOREIGN KEY (`product_price_id`) REFERENCES `product_price` (`id`);
 
 --
--- Constraints for table `product_sizes`
+-- Beperkingen voor tabel `product_sizes`
 --
 ALTER TABLE `product_sizes`
   ADD CONSTRAINT `product_sizes_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
