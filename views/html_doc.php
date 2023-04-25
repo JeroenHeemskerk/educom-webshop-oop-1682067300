@@ -1,15 +1,15 @@
 <?php
 
-class showHtmlDoc {
+class HtmlDoc {
     private function showHtmlStart(){
-        echo '<!DOC type="html">';
+        echo '<!DOCTYPE html>';
         echo '<html lang="NL">';
     }
     
     private function showHeadStart(){
         echo '<head>';
+        echo '<link rel="stylesheet" href="../css/mystyle.css">';
         echo '<meta charset="UTF-8">';
-        echo '<meta name="viewport" content="width=device-width, initial-scale=1">'; 
     }
 
     private function showHeadContent(){
@@ -24,8 +24,8 @@ class showHtmlDoc {
         echo '<body>';
     }
     
-    private function showBodyContent(){
-
+    protected function showBodyContent() {
+        
     }
 
     private function showBodyEnd(){
@@ -36,7 +36,7 @@ class showHtmlDoc {
         echo '</html>'; 
     }
 
-    public function show(){
+    public function show() {
         $this->showHtmlStart();
         $this->showHeadStart();
         $this->showHeadContent();
@@ -45,6 +45,6 @@ class showHtmlDoc {
         $this->showBodyContent();
         $this->showBodyEnd();
         $this->showHtmlEnd();
-      }
+    }
 }
 ?>

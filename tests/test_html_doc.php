@@ -1,6 +1,6 @@
 <?php
-include_once "C:/xampp/htdocs/educom-webshop-oop-1/views/HtmlDoc.php";
+include_once "../views/html_doc.php";
 
-$view = new showHtmlDoc();
+$view = new HtmlDoc();
 $view -> show();
 ?>
