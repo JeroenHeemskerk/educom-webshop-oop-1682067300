@@ -233,11 +233,12 @@
                 showAboutContent();
                 break;
             case 'contact':
-                echo 	'<div class="content">';
-                require_once('contact.php');
-                include 'forms.php';
-                echo 'Vul hier uw gegevens in:<br><br>';
-                showContactForm($data);
+                // echo 	'<div class="content">';
+                require_once('views/contact_doc.php');
+                $view = new ContactDoc($data);
+                // echo 'Vul hier uw gegevens in:<br><br>';
+                // showContactForm($data);
+
                 break;
             case 'register' :
                 echo 	'<div class="content">';
@@ -295,8 +296,9 @@
                 echo "ERROR, Page not found"; 
                 break;
                     
-                }     
-        echo "</div>";
+                } 
+                $view->show();    
+        // echo "</div>";
     }
 
     function showFooter() {

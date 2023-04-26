@@ -8,7 +8,7 @@ class HtmlDoc {
     
     private function showHeadStart(){
         echo '<head>';
-        echo '<link rel="stylesheet" href="../css/mystyle.css">';
+        echo '<link rel="stylesheet" href="css/mystyle.css">';
         echo '<meta charset="UTF-8">';
     }
 

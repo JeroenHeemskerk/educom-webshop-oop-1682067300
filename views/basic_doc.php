@@ -3,11 +3,11 @@
     require_once 'html_doc.php';
 
     class BasicDoc extends HtmlDoc {
-        // protected $model;
+        protected $data;
 
-        // public function __construct($pageModel) {
-        //     $this->model = $pageModel;
-        // }
+        public function __construct($data) {
+            $this->data = $data;
+        }
         
         private function showTitle() {
             echo '<title>Basic</title>';
