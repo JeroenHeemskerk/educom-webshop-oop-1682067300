@@ -72,9 +72,8 @@
                 $cartContent = getCart();
                 if($cartContent)
                 saveOrder($user_id, $cartContent);
-                break;
-                       
-            }
+                break;               
+        }
     } 
     
     function saveOrder($user_id, $cartContent) {

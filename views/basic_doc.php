@@ -13,8 +13,25 @@
             echo '<title>Basic</title>';
         }
 
-        private function showHeader() {
-            echo '<header></header>';
+        protected function showHeaderStart() {
+            echo '<header><h1>';
+        }
+
+        protected function showHeader() {
+            echo 'Basic';
+        }
+        private function showHeaderEnd() {
+            echo '</h1></header>';
+        }
+
+        private function showMenu() { 
+                
+            echo    '<ul id="menu">';
+            
+            foreach($this->data['menu'] as $key => $MenuOptions) {
+                echo '<li class="menuoption"><a href="index.php?page=' . $key . '" class="button">' . $MenuOptions. '</a></li>';
+            } 
+            echo '</ul>';
         }
 
         private function showContentStart() {
@@ -22,6 +39,7 @@
         }
 
         protected function showContent() {
+            echo 'hello world!';
         }
 
         private function showContentEnd() {
@@ -39,7 +57,10 @@
         }
 
         protected function showBodyContent() {
+            $this->showHeaderStart();
             $this->showHeader();
+            $this->showHeaderEnd();
+            $this->showMenu();
             $this->showContentStart();
             $this->showContent();
             $this->showContentEnd();

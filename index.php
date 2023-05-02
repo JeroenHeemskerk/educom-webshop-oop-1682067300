@@ -57,6 +57,16 @@
             }
         
         $data['page'] = $page;
+        $Menu = array("home" => "Home", "about" => "Over Mij", "contact" => "Contact", "webshop" => "Webshop");
+        if(!isUserLoggedIn()) {
+            $Menu['register'] = "Registreer";
+            $Menu['login'] = "Log in";
+        } else {
+            $Menu['shoppingcart'] = "Winkelmandje";
+            $Menu['changepass'] = "Wachtwoord wijzigen"; 
+            $Menu['logout'] = getLoggedInUserName() . " Uitloggen";
+        }
+        $data['menu'] = $Menu;
         return $data;
 
     }
@@ -83,10 +93,45 @@
     
 
     function showResponsePage($data) { 
-        showDocumentstart(); 
-        showHeadSection($data);
-        showBodySection($data);
-        showDocumentEnd();
+        $view=null;
+        switch($data['page']) { 
+            case 'home':
+                require_once('views/home_doc.php');
+                $view = new HomeDoc($data);
+                break;
+            case 'about':
+                require_once('views/about_doc.php');
+                $view = new AboutDoc($data);
+                break;
+            case 'contact':
+                require_once('views/contact_doc.php');
+                $view = new ContactDoc($data);
+                break;
+            case 'register' :
+                require_once('views/register_doc.php');
+                $view = new RegisterDoc($data);
+                break;
+            case 'thanks' :
+                require_once('views/thanks_doc.php');
+                //$view = new ThanksDoc($data);
+                break;         
+            case 'login' :
+                require_once ('views/login_doc.php');
+                $view = new LoginDoc($data);
+                break;
+            case 'webshop' :
+                require_once ('views/webshop_doc.php');
+                $view = new WebshopDoc($data);
+                break;
+            default:
+                showDocumentstart(); 
+                showHeadSection($data);
+                showBodySection($data);
+                showDocumentEnd();
+            }
+        if (!empty($view)) {
+            $view->show();
+        }
     }
     
     function showDocumentStart() { // showing doc start
@@ -97,7 +142,7 @@
 
                 
     function showHeadSection($data) { // including the style sheet and the page titles
-        echo "<head><link rel='stylesheet' href='mystyle.css'>";
+        echo "<head><link rel='stylesheet' href='css/mystyle.css'>";
         echo '<script src="Scripts/website.js"></script>';
         echo '<title>';  
         switch($data['page']) 
@@ -139,75 +184,67 @@
         
     function showBodySection($data) { 
                 echo '<body>';
-                // showHeader($data);
-                showMenu();
+                showHeader($data);
+                showMenu($data);
                 showGenericErr($data);
                 showContent($data);
-                // showFooter();
+                showFooter();
                 echo '</body>';
     }
     
-    // function showHeader($data) { //showing the page title
-    //     echo "<h1>";
-    //     switch($data['page']) 
-    //     { 
-    //         case 'home':
-    //         require_once('home.php');
-    //             showHomeHeader();
-    //             break;
-    //         case 'about':
-    //             require_once('about.php');
-    //             showAboutHeader();
-    //             break;
-    //         case 'contact':
-    //             require_once('contact.php');
-    //             showContactHeader();
-    //             break;
-    //         case 'thanks' :
-    //             require_once('contact.php');
-    //             showContactHeader();
-    //             break;  
-    //         case 'register' :
-    //             require_once('register.php');
-    //             showRegisterHeader();
-    //             break;
-    //         case 'login' :
-    //             require_once('login.php');
-    //             showLoginHeader();
-    //             break;
-    //         case 'webshop':
-    //             require_once('webshop.php');
-    //             showWebshopHeader();
-    //             break;
-    //         case 'shoppingcart': 
-    //             require_once('shoppingcart.php');
-    //             showCartHeader();
-    //             break;
-    //         // case 'detail' :
-    //         //     require_once('webshop.php');
-    //         //     showWebshopHeader();
-    //         //     break;
+    function showHeader($data) { //showing the page title
+        echo "<h1>";
+        switch($data['page']) 
+        { 
+            case 'home':
+            require_once('home.php');
+                showHomeHeader();
+                break;
+            case 'about':
+                require_once('about.php');
+                showAboutHeader();
+                break;
+            case 'contact':
+                require_once('contact.php');
+                showContactHeader();
+                break;
+            case 'thanks' :
+                require_once('contact.php');
+                showContactHeader();
+                break;  
+            case 'register' :
+                require_once('register.php');
+                showRegisterHeader();
+                break;
+            case 'login' :
+                require_once('login.php');
+                showLoginHeader();
+                break;
+            case 'webshop':
+                require_once('webshop.php');
+                showWebshopHeader();
+                break;
+            case 'shoppingcart': 
+                require_once('shoppingcart.php');
+                showCartHeader();
+                break;
+            case 'detail' :
+                require_once('webshop.php');
+                showWebshopHeader();
+                break;
 
 
-    //     } 
-    //     echo "</h1>";     
-    // }
+        } 
+        echo "</h1>";     
+    }
 
           
     
-    function showMenu() { 
-        $Menu = array("home" => "Home", "about" => "Over Mij", "contact" => "Contact", "webshop" => "Webshop");
-        if(!isUserLoggedIn()) {
-            $Menu['register'] = "Registreer";
-            $Menu['login'] = "Log in";
-        } else {
-            $Menu['shoppingcart'] = "Winkelmandje";
-            $Menu['changepass'] = "Wachtwoord wijzigen"; 
-            $Menu['logout'] = getLoggedInUserName() . " Uitloggen";
-        }        
+    function showMenu($data) { 
+                
         echo    '<ul id="menu">';
         
-        foreach($Menu as $key => $MenuOptions) {
+        foreach($data['menu'] as $key => $MenuOptions) {
             echo '<li class="menuoption"><a href="index.php?page=' . $key . '" class="button">' . $MenuOptions. '</a></li>';
         } 
         echo '</ul>';
@@ -221,35 +258,8 @@
     }
     
     function showContent($data) { //showing page content
+        echo '<div class="content">';
         switch($data['page']) { 
-            case 'home':
-                require_once('views/home_doc.php');
-                $view = new HomeDoc($data);
-                break;
-            case 'about':
-                require_once('views/about_doc.php');
-                $view = new AboutDoc($data);
-                break;
-            case 'contact':
-                require_once('views/contact_doc.php');
-                $view = new ContactDoc($data);
-                break;
-            case 'register' :
-                echo 	'<div class="content">';
-                require_once('register.php');
-                include 'forms.php';
-                echo 'Vul hier uw gegevens in:<br><br>';
-                showRegisterForm($data);
-                break;
-            case 'thanks' :
-                echo 	'<div class="content">';
-                require_once('contact.php');
-                showContactThanks($data);
-                break;         
-            case 'login' :
-                require_once ('views/login_doc.php');
-                $view = new LoginDoc($data);
-                break;
             case 'changepass' :
                 echo 	'<div class="content">';
                 include 'forms.php';
@@ -289,8 +299,7 @@
                 break;
                     
                 } 
-                $view->show();    
-        // echo "</div>";
+        echo "</div>";
     }
 
     function showFooter() {

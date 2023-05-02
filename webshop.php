@@ -19,13 +19,13 @@ function showWebshopContent($data) {
         showFormStart('product');
         showFormField('flavour', 'Keuze', 'select', $value, $options, null, null, $onChange);
         echo '<br>';
-        if (!isUserLoggedIn($_SESSION)) {
+        if (!isUserLoggedIn()) {
             echo '</form><br>';
         } else { 
             $data['amount'] = 1;
             showFormField('amount', 'Aantal', 'number', $data , $options, 1, 99, null);
             echo '<br>';
-            showFormButton("Toevoegen", "action");
+            showFormButton('Toevoegen', 'action');
             echo '<br>';  
             showFormEnd("webshop");
         }
@@ -37,7 +37,6 @@ function showProduct($key, $value){
     $price_id = key($value['flavours']);
     $flavour = $value['flavours'][$price_id];
     echo '<a id="details_'.$value['id'].'" href="index.php?page=detail&id=' . $value["id"] . '&size='.$flavour['size_id'].'&material='.$flavour['material_id'].'&price='.$price_id.'">';
-    // echo '<table><tr>';
     echo '<h2 id="producttitle">' . $value["name"] . '</h2>';  
     echo '<td class="productroster"><img src="Images/'. $value["image"] . '" " alt="' . $value["name"] . '" class="img">';
     echo '</a>';    
@@ -96,7 +95,7 @@ function showProductDetail($id, $size, $material, $priceId) {
     showFormStart('product');
     showFormField('flavour', 'Maat:', 'select', $product, $sizeOptions, null, null, $onChange);
     showFormField('material', 'Materiaal', 'select', $product, $materialOptions, null, null, $onChange);
-    if (!isUserLoggedIn($_SESSION)) {
+    if (!isUserLoggedIn()) {
         showFormEnd("detail");
         echo '<br>';
     } else { 
