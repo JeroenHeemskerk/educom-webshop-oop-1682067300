@@ -14,8 +14,7 @@ class ContactDoc extends FormsDoc {
     }
 
     protected function showContent() {
-        echo '<h1>Contact opnemen?<h1>';
-        echo '<h2>Contactgegevens</h2>';
+        echo '<h1>Contact opnemen?</h1>';
         $this->showForm();
     }
 }

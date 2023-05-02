@@ -139,59 +139,59 @@
         
     function showBodySection($data) { 
                 echo '<body>';
-                showHeader($data);
+                // showHeader($data);
                 showMenu();
                 showGenericErr($data);
                 showContent($data);
-                showFooter();
+                // showFooter();
                 echo '</body>';
     }
     
-    function showHeader($data) { //showing the page title
-        echo "<h1>";
-        switch($data['page']) 
-        { 
-            case 'home':
-            require_once('home.php');
-                showHomeHeader();
-                break;
-            case 'about':
-                require_once('about.php');
-                showAboutHeader();
-                break;
-            case 'contact':
-                require_once('contact.php');
-                showContactHeader();
-                break;
-            case 'thanks' :
-                require_once('contact.php');
-                showContactHeader();
-                break;  
-            case 'register' :
-                require_once('register.php');
-                showRegisterHeader();
-                break;
-            case 'login' :
-                require_once('login.php');
-                showLoginHeader();
-                break;
-            case 'webshop':
-                require_once('webshop.php');
-                showWebshopHeader();
-                break;
-            case 'shoppingcart': 
-                require_once('shoppingcart.php');
-                showCartHeader();
-                break;
-            // case 'detail' :
-            //     require_once('webshop.php');
-            //     showWebshopHeader();
-            //     break;
+    // function showHeader($data) { //showing the page title
+    //     echo "<h1>";
+    //     switch($data['page']) 
+    //     { 
+    //         case 'home':
+    //         require_once('home.php');
+    //             showHomeHeader();
+    //             break;
+    //         case 'about':
+    //             require_once('about.php');
+    //             showAboutHeader();
+    //             break;
+    //         case 'contact':
+    //             require_once('contact.php');
+    //             showContactHeader();
+    //             break;
+    //         case 'thanks' :
+    //             require_once('contact.php');
+    //             showContactHeader();
+    //             break;  
+    //         case 'register' :
+    //             require_once('register.php');
+    //             showRegisterHeader();
+    //             break;
+    //         case 'login' :
+    //             require_once('login.php');
+    //             showLoginHeader();
+    //             break;
+    //         case 'webshop':
+    //             require_once('webshop.php');
+    //             showWebshopHeader();
+    //             break;
+    //         case 'shoppingcart': 
+    //             require_once('shoppingcart.php');
+    //             showCartHeader();
+    //             break;
+    //         // case 'detail' :
+    //         //     require_once('webshop.php');
+    //         //     showWebshopHeader();
+    //         //     break;
 
 
-        } 
-        echo "</h1>";     
-    }
+    //     } 
+    //     echo "</h1>";     
+    // }
 
           
     
@@ -223,22 +223,16 @@
     function showContent($data) { //showing page content
         switch($data['page']) { 
             case 'home':
-                echo 	'<div class="content">';
-                require_once('home.php');
-                showHomeContent();
+                require_once('views/home_doc.php');
+                $view = new HomeDoc($data);
                 break;
             case 'about':
-                echo 	'<div class="content">';
-                require_once('about.php');
-                showAboutContent();
+                require_once('views/about_doc.php');
+                $view = new AboutDoc($data);
                 break;
             case 'contact':
-                // echo 	'<div class="content">';
                 require_once('views/contact_doc.php');
                 $view = new ContactDoc($data);
-                // echo 'Vul hier uw gegevens in:<br><br>';
-                // showContactForm($data);
-
                 break;
             case 'register' :
                 echo 	'<div class="content">';
@@ -253,10 +247,8 @@
                 showContactThanks($data);
                 break;         
             case 'login' :
-                echo 	'<div class="content">';
-                require_once ('login.php');
-                include 'forms.php';
-                showLoginForm($data);
+                require_once ('views/login_doc.php');
+                $view = new LoginDoc($data);
                 break;
             case 'changepass' :
                 echo 	'<div class="content">';
