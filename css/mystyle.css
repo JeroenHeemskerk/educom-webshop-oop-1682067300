@@ -80,6 +80,9 @@
 				input[type="password"] {
 					width:400px;
 				}
+				input[type="email"] {
+					width:400px;
+				}
 
 				textarea { /* om de breedte van de textarea aan te passen */
 					width:400px;

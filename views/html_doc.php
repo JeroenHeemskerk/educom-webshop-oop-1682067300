@@ -12,11 +12,11 @@ class HtmlDoc {
         echo '<meta charset="UTF-8">';
     }
 
-    private function showHeadContent(){
+    protected function showHeadContent(){
 
     }
     
-    private function showHeadEnd(){
+    protected function showHeadEnd(){
         echo '</head>';
     }
 

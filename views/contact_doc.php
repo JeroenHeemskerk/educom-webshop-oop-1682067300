@@ -6,16 +6,19 @@ class ContactDoc extends FormsDoc {
         $this->showFormStart('contact');
         $this->showFormField('title', 'Aanhef:', 'select', $this->data, array('dhr' => 'Dhr', 'mvr' => 'Mvr', 'other' => 'Anders'));
         $this->showFormField('name', 'Naam:', 'text', $this->data);
-        $this->showFormField('email', 'E-mail:', 'e-mail', $this->data);
+        $this->showFormField('email', 'E-mail:', 'email', $this->data);
         $this->showFormField('telefoon', 'Telefoonnummer:', 'text', $this->data); 
         $this->showFormField('favcontact', 'Hoe wilt u gecontacteerd worden?', 'radio', $this->data, array('telefoon' => 'Telefonisch', 'mail' => 'E-mail'));
         $this->showFormField('comment', 'Opmerking:', 'textarea', $this->data);
         $this->showFormButton('Versturen', 'contact');
         $this->showFormEnd('contact');
     }
+    protected function showHeader()
+    {
+        echo '<h1>Contact opnemen?</h1>';
+    }
 
     protected function showContent() {
-        echo '<h1>Contact opnemen?</h1>';
         $this->showForm();
     }
 }

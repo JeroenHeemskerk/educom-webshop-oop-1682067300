@@ -9,5 +9,9 @@ abstract class ProductsDoc extends FormsDoc {
         }
         return $productId . "_" . $sizeId . "_" . $materialId . "_" . $priceId;
     }
+
+    protected function showJs() {
+        echo '<script src="Scripts/website.js"></script>';
+    }
 }
 ?>

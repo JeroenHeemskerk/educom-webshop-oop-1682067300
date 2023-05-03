@@ -10,7 +10,7 @@
         }
         
         private function showTitle() {
-            echo '<title>Basic</title>';
+            echo '<title>'. ucfirst($this->data['page']).'</title>';
         }
 
         protected function showHeaderStart() {
@@ -34,6 +34,7 @@
             echo '</ul>';
         }
 
+
         private function showContentStart() {
             echo '<div class="content" style="max-width: 800px;">';
         }
@@ -51,10 +52,15 @@
             echo '<p class="footertext" style="text-align:right;">&#169; 2023 Ruben van der Zouw</p>';
             echo '</footer>';
         }
+        
+        protected function showJs() {
+        }
 
         protected function showHeadContent() {
+            $this->showJs();
             $this->showTitle();
         }
+
 
         protected function showBodyContent() {
             $this->showHeaderStart();

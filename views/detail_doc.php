@@ -7,8 +7,30 @@
             echo 'Detailpagina';
         }
 
+        private function getDetailVar() {
+            if ( $_SERVER['REQUEST_METHOD']== "POST") {
+                $productflavour = getPostVar("flavour");
+                $product = explode('_', $productflavour );
+                // $id = $product[0];
+                // $size = $product[1];
+                // $material = $product[2];
+                // $priceId = $product[3];
+                } else {
+                $product[0] = getUrlVar("id");
+                $product[1] = getUrlVar("size");
+                $product[2] = getUrlVar("material");
+                $product[3] = getUrlVar('price');
+                }
+            return $product;
+        }
+
 
         protected function showContent() {
+            $array = $this->getDetailVar();
+            $id = $array[0];
+            $size = $array[1];
+            $material = $array[2];
+            $priceId = $array[3];
             $options = array();
             $flavour["price"] = 0;
             $product = doesProductExist($id, $size, $material);
@@ -36,7 +58,7 @@
                 $price_id = key($product['flavours']);
                 $flavour = $product['flavours'][$price_id];
             }
-            $product['size']=$product['material']=generateKey($id, $flavour);
+            $product['size']=$product['material']=$this->generateKey($id, $flavour);
             echo '<div class="productheader">
                     <h1>' . $product["name"] . '</h1>
                   </div>';
@@ -48,7 +70,7 @@
             $sizeOptions = array();
             $materialOptions = array();
             foreach ($product['flavours'] as $flav)  {
-                $flav_key = generateKey($id, $flav);
+                $flav_key = $this->generateKey($id, $flav);
                 if ($flav['size_id'] == $size) {
                     $materialOptions[$flav_key] = "Materiaal: " . $flav["material"];
                 }
@@ -61,12 +83,17 @@
             $this->showFormField('flavour', 'Maat:', 'select', $product, $sizeOptions, null, null, $onChange);
             $this->showFormField('material', 'Materiaal', 'select', $product, $materialOptions, null, null, $onChange);
             $this->showFormEnd('detail');
-                showFormField('amount', 'Aantal', 'number', $product , $options , 1, 99, NULL);
+            if (!isUserLoggedIn()) {
+                $this->showFormEnd("detail");
                 echo '<br>';
-                showFormButton("Toevoegen", "action");
-                showFormEnd("detail");
-                echo '<br>';  
-            
+            } else { 
+                echo '<br>';
+                $this->showFormField('amount', 'Aantal', 'number', $product , $options , 1, 99, NULL);
+                echo '<br>';
+                $this->showFormButton("Toevoegen", "action");
+                $this->showFormEnd("detail");
+                echo '<br>';   
+            }
             echo '<div class="descriptionheader">';
             echo '<h3>Productomschrijving</h3>';
             echo '<div class="description">';
