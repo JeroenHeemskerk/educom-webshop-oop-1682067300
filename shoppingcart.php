@@ -13,7 +13,7 @@ function showCartContent() {
 $cartContent = getCartContent();
 $onChange = "(this).closest('form').submit()";
 
-$cartline['webshop'] = "updateQuantity";
+$cartline['action'] = "updateQuantity";
 if ($cartContent != NULL) {
 foreach($cartContent['cartlines'] as $key=>$product) { 
     
@@ -27,7 +27,7 @@ foreach($cartContent['cartlines'] as $key=>$product) {
             showFormField('amount', 'Aantal:', 'number', $product, Null, 0, 99, $onChange);
             echo '<br><br> Prijs: &#8364;'.number_format((float)$product['subtotal'], 2, '.'.'').'';
             showFormField('price_id' , "", 'hidden', $product);
-            showFormField('webshop', "", 'hidden', $cartline);
+            showFormField('action', "", 'hidden', $cartline);
             // showFormButton(null, "shoppingcart");
             showFormEnd('shoppingcart');        
             echo '</td></tr>';

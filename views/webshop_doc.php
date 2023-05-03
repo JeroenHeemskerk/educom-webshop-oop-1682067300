@@ -28,11 +28,16 @@ class WebshopDoc extends ProductsDoc {
             $this->showFormStart('product');
             $this->showFormField('flavour', 'Keuze', 'select', $product, $options, null, null, $onChange);
             $data['amount'] = 1;
-            $this->showFormField('amount', 'Aantal', 'number', $data , $options, 1, 99, null);
-            echo '<br>';
-            $this->showFormButton('Toevoegen', 'action');
-            echo '<br>';  
-            $this->showFormEnd('webshop');
+            if (!isUserLoggedIn()) {
+                $this->showFormEnd('webshop');
+            } else { 
+                $data['amount'] = 1;
+                $this->showFormField('amount', 'Aantal', 'number', $data , $options, 1, 99, null);
+                echo '<br>';
+                $this->showFormButton('Toevoegen', 'action');
+                echo '<br>';  
+                $this->showFormEnd("webshop");
+            }
         }
     }
 }
