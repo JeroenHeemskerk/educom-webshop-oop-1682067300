@@ -3,10 +3,14 @@
     session_start();
 
     require_once('sessions.php');
+    require_once('controllers/page_controller.php');
 
-    $page = getRequestedPage();
-    $data = processRequest($page);
-    showResponsePage($data);
+    $controller = new PageController();
+    $controller->handleRequest();
+
+    // $page = getRequestedPage();
+    // $data = processRequest($page);
+    // showResponsePage($data);
 
     function processRequest($page) {
         include 'validations.php';
@@ -95,14 +99,14 @@
     function showResponsePage($data) { 
         $view=null;
         switch($data['page']) { 
-            case 'home':
-                require_once('views/home_doc.php');
-                $view = new HomeDoc($data);
-                break;
-            case 'about':
-                require_once('views/about_doc.php');
-                $view = new AboutDoc($data);
-                break;
+            // case 'home':
+            //     require_once('views/home_doc.php');
+            //     $view = new HomeDoc($data);
+            //     break;
+            // case 'about':
+            //     require_once('views/about_doc.php');
+            //     $view = new AboutDoc($data);
+            //     break;
             case 'contact':
                 require_once('views/contact_doc.php');
                 $view = new ContactDoc($data);

@@ -1,5 +1,7 @@
 <?php
 
+require_once ('models/page_model.php');
+
 class PageController {
     private $model;
     
@@ -9,15 +11,36 @@ class PageController {
 
     public function handleRequest() {
         $this->getRequest();
-        $this->processRequest();
-        $this->showResponse();
+        // $this->processRequest();
+        $this->showResponsePage();
     }
     
-    private getRequest() {
+    private function getRequest() {
         $this->model->getRequestedPage();
+    }
+
+    private function showResponsePage() {
+        $this->model->createMenu();
+        $view = NULL;
+
+        switch ($this->model->page) {
+            case 'home' :
+                require_once ('views/home_doc.php');
+                $view = new HomeDoc($this->model);
+                break;
+            case 'about' :
+                require_once ('views/about_doc.php');
+                $view = new AboutDoc($this->model);
+                break;
+        }
+        if (!empty($view)) {
+            $view->show();
+        }
     }
 }
     
+
+
 //     private processRequest() {
 //         switch($this->model->page) {
 //             case 'Login' :

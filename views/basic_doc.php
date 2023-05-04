@@ -3,14 +3,14 @@
     require_once 'html_doc.php';
 
     class BasicDoc extends HtmlDoc {
-        protected $data;
+        protected $model;
 
-        public function __construct($data) {
-            $this->data = $data;
+        public function __construct($pageModel) {
+            $this->model = $pageModel;
         }
         
         private function showTitle() {
-            echo '<title>'. ucfirst($this->data['page']).'</title>';
+            echo '<title>'. ucfirst($this->model->page).'</title>';
         }
 
         protected function showHeaderStart() {
@@ -27,10 +27,9 @@
         private function showMenu() { 
                 
             echo    '<ul id="menu">';
-            
-            foreach($this->data['menu'] as $key => $MenuOptions) {
-                echo '<li class="menuoption"><a href="index.php?page=' . $key . '" class="button">' . $MenuOptions. '</a></li>';
-            } 
+            foreach($this->model->menu as $menuOption)    {
+                $menuOption->showMenuOption();
+            }
             echo '</ul>';
         }
 
