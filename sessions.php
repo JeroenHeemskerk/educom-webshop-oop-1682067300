@@ -1,43 +1,46 @@
 <?php
-function loginUser($name, $id) {
-    $_SESSION['login'] = $name;
-    $_SESSION['user_id'] = $id;
-    $_SESSION['cart'] = array();
-}
- 
- 
-function getLoggedInUserName() {
-    return $_SESSION['login'];
-}
 
-function getLoggedInID() {
-    return $_SESSION['user_id'];
-}
- 
-function logoutUser() {
-    unset($_SESSION['login']);
-}
-
-function addToCart($priceId, $amount) {
-    if(isset($_SESSION['cart'][$priceId])){
-    $_SESSION['cart'][$priceId] += $amount;
-    } else { 
-    $_SESSION['cart'][$priceId] = $amount;
+class SessionManager {
+    function loginUser($name, $id) {
+        $_SESSION['login'] = $name;
+        $_SESSION['user_id'] = $id;
+        $_SESSION['cart'] = array();
     }
-}
+    
+    
+    function getLoggedInUserName() {
+        return $_SESSION['login'];
+    }
 
-function updateCart($priceId, $amount) {
-    $_SESSION['cart'][$priceId] = $amount;
-}
-function removeFromCart($priceId) {
-    unset($_SESSION['cart'][$priceId]);
-}
+    function getLoggedInID() {
+        return $_SESSION['user_id'];
+    }
+    
+    function logoutUser() {
+        unset($_SESSION['login']);
+    }
 
-function getCart(){
-    return $_SESSION['cart'];
-  }
+    function addToCart($priceId, $amount) {
+        if(isset($_SESSION['cart'][$priceId])){
+        $_SESSION['cart'][$priceId] += $amount;
+        } else { 
+        $_SESSION['cart'][$priceId] = $amount;
+        }
+    }
 
-function emptyCart() {
-    $_SESSION['cart'] = array();
+    function updateCart($priceId, $amount) {
+        $_SESSION['cart'][$priceId] = $amount;
+    }
+    function removeFromCart($priceId) {
+        unset($_SESSION['cart'][$priceId]);
+    }
+
+    function getCart(){
+        return $_SESSION['cart'];
+    }
+
+    function emptyCart() {
+        $_SESSION['cart'] = array();
+    }
 }
 ?>
