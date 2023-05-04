@@ -5,9 +5,6 @@ function loginUser($name, $id) {
     $_SESSION['cart'] = array();
 }
  
-function isUserLoggedIn() {
-    return isset($_SESSION['login']);
-}
  
 function getLoggedInUserName() {
     return $_SESSION['login'];
@@ -39,27 +36,6 @@ function removeFromCart($priceId) {
 function getCart(){
     return $_SESSION['cart'];
   }
-
-function getCartContent() {
-    $cart = getCart();
-    if ($cart != NULL) {
-        $products = fetchProductByPrizeId(array_keys($cart));
-        $total = 0;
-        $cartlines = array();
-        foreach($cart as $priceId=>$amount) {
-            $product = $products[$priceId];
-            $subtotal = $amount * $product['price'];
-            $cartline = array('price_id' => $priceId, 'id' => $product['id'], 'amount' => $amount, 'name' => $product['name'], 'subtotal' => $subtotal,
-            'price' => $product['price'], 'image' => $product['image'], 'size_id' => $product['size_id'], 'material_id' => $product['material_id'], 
-            'material' => $product['material']);
-            $cartlines[] = $cartline;
-            $total += $subtotal;
-            }
-            return array('cartlines'=>$cartlines, 'total' => $total);
-        } else {
-        echo 'Uw winkelwagen is nog leeg. &#128532';
-        }
-}
 
 function emptyCart() {
     $_SESSION['cart'] = array();
