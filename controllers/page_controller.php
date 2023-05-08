@@ -37,6 +37,26 @@ class PageController {
                 require_once ('views/login_doc.php');
                 $view = new LoginDoc($this->model);
                 break;
+            case 'register' :
+                require_once ('views/register_doc.php');
+                $view = new RegisterDoc($this->model);
+                break;
+            case 'changepass' :
+                require_once ('views/change_pass_doc.php');
+                $view = new ChangePassDoc($this->model);
+                break;
+            case 'contact' :
+                require_once ('views/contact_doc.php');
+                $view = new ContactDoc($this->model);
+                break;
+            case 'thanks' :
+                require_once('views/thanks_doc.php');
+                $view = new ThanksDoc($this->model);
+                break;
+            case 'webshop' :
+                require_once ('views/webshop_doc.php');
+                $view = new WebshopDoc($this->model);
+                break;
         }
         if (!empty($view)) {
             $view->show();
@@ -48,13 +68,36 @@ class PageController {
 
     private function processRequest() {
         switch($this->model->page) {
-            case 'Login' :
+            case 'login' :
                 require_once 'models/user_model.php';
                 $this->model = new UserModel($this->model);
                 $this->model->validateLogin();
                 if($this->model->valid) {
                     $this->model->doLoginUser();
-                    $this->model->setPage('Home');
+                    $this->model->setPage('home');
+                }
+                break;
+            case 'logout' :
+                require_once 'models/user_model.php';
+                $this->model = new UserModel($this->model);
+                $this->model->doLogoutuser();
+                $this->model->setPage('home');
+                break;
+            case 'contact':
+                require_once 'models/user_model.php';
+                $this->model = new UserModel($this->model);
+                $this->model->validateContact();
+                if ($this->model->valid) {
+                    $this->model->setPage('thanks'); 
+                }
+                break;
+            case 'register' :
+                require_once 'models/user_model.php';
+                $this->model = new UserModel($this->model);
+                $this->model->validateRegister();
+                if ($this->model->valid) {
+                    $this->model->storeUser();    
+                    $this->model->setPage('login'); 
                 }
                 break;
             

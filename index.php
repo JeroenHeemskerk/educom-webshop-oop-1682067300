@@ -119,10 +119,10 @@
                 require_once('views/thanks_doc.php');
                 $view = new ThanksDoc($data);
                 break;         
-            case 'login' :
-                require_once ('views/login_doc.php');
-                $view = new LoginDoc($data);
-                break;
+            // case 'login' :
+            //     require_once ('views/login_doc.php');
+            //     $view = new LoginDoc($data);
+            //     break;
             case 'webshop' :
                 require_once ('views/webshop_doc.php');
                 $view = new WebshopDoc($data);

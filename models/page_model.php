@@ -51,14 +51,14 @@ class PageModel {
         $this->menu['about'] = new MenuItem('about', 'Over Mij');
         $this->menu['contact'] = new MenuItem('contact', 'Contact');
         $this->menu['webshop'] = new MenuItem('webshop', 'Webshop');
-        // if($this->sessionManager->isUserLoggedIn()){
-        //    $this->menu['shoppingcart'] = new MenuItem('shoppingcart', 'Shoppingcart');
-        //    $this->menu['changepassword'] = new MenuItem('changepassword', 'Wachtwoord Wijzigen');
-        //   $this->menu['logout'] = new MenuItem('logout', 'Log uit ' . $this->sessionManager->getLoggedInUserName('name'));
-        // } else {
+        if($this->sessionManager->isUserLoggedIn()){
+           $this->menu['shoppingcart'] = new MenuItem('shoppingcart', 'Winkelwagentje');
+           $this->menu['changepassword'] = new MenuItem('changepassword', 'Wachtwoord Wijzigen');
+          $this->menu['logout'] = new MenuItem('logout', 'Log uit ' . $this->sessionManager->getLoggedInUserName('name'));
+        } else {
         $this->menu['register'] = new MenuItem('register', 'Registreren');
         $this->menu['login'] = new MenuItem('login', 'Login');
-        // }
+        }
     }
 }    
 ?>

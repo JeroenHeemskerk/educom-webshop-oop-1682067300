@@ -7,7 +7,9 @@ class SessionManager {
         $_SESSION['cart'] = array();
     }
     
-    
+    function isUserLoggedIn() {
+        return isset($_SESSION['login']);
+    }
     function getLoggedInUserName() {
         return $_SESSION['login'];
     }

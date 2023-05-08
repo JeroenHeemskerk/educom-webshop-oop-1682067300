@@ -10,10 +10,10 @@ class ChangePassDoc extends FormsDoc {
     protected function showContent()
     {
             $this->showFormStart('changepass');
-            $this->showFormField('password', 'Huidig wachtwoord:', 'password', $this->data);
-            $this->showFormField('newpassword', 'Nieuw wachtwoord:', 'password', $this->data);
-            $this->showFormField('repeatnewpassword', 'Herhaal uw nieuwe wachtwoord:', 'password', $this->data);
+            $this->showFormField('password', 'Huidig wachtwoord:', 'password', $this->model);
+            $this->showFormField('newpassword', 'Nieuw wachtwoord:', 'password', $this->model);
+            $this->showFormField('repeatnewpassword', 'Herhaal uw nieuwe wachtwoord:', 'password', $this->model);
             $this->showFormButton('Veranderen', 'action');
-            $this->showFormEnd($this->data['page']);
+            $this->showFormEnd($this->model->page);
     }
 }
