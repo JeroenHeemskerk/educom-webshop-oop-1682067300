@@ -1,5 +1,6 @@
 <?php
 require_once 'page_model.php';
+require_once 'sessions.php';
 require_once 'db_repository.php';
 // require_once 'Util.php';
 
@@ -28,13 +29,22 @@ class UserModel extends PageModel {
     public $telefoonErr = '';
     public $comment = '';
     public $commentErr = '';
+    public $newpassword = '';
+    public $newpasswordErr = '';
     public $repeatpassword = '';
     public $repeatpasswordErr = '';
+    public $repeatnewpassword = '';
+    public $repeatnewpasswordErr ='';
     public $genericErr = '';
     public $valid = false;
 
     public function __construct($pageModel) {
         PARENT::__construct($pageModel);
+
+        if($this->sessionManager->isUserLoggedIn()){
+            // Create a logged in user object 
+            $this->user = findUserById($this->sessionManager->getLoggedInID('id'));
+          }
     }
 
     public function validateLogin() {
@@ -200,6 +210,45 @@ class UserModel extends PageModel {
             }
         }
 
+    }
+
+    function validateChangePass() {
+        $this->user = findUserByID($this->getLoggedInID());        
+    
+        if ($this->isPost) {
+            if (empty(Util::getPostVar('password'))) {
+                $this->passwordErr="* Vul uw wachtwoord in";
+                } else { 
+                $this->password=Util::test_input(Util::getPostVar("password"));     
+                }
+            if (empty(Util::getPostVar('newpassword'))) {
+                $this->newpasswordErr="* Vul uw nieuwe wachtwoord in";
+            } else {
+                $this->newpassword=Util::test_input(Util::getPostVar("newpassword"));
+            }
+            if (empty(Util::getPostVar('repeatnewpassword'))) {
+                $this->repeatnewpasswordErr="* Herhaal uw nieuwe wachtwoord";
+            } else { $this->repeatnewpassword=Util::test_input(Util::getPostVar("repeatpassword"));
+                if (Util::getPostVar('repeatnewpassword') !== (Util::getPostVar('newpassword'))) {
+                    $this->repeatnewpasswordErr ="* Uw wachtwoorden zijn niet gelijk";
+                }
+            }
+            if ($this->password !== $this->user->getPassword()) {
+                $this->passwordErr="* Vul het juiste wachtwoord in";
+            }
+    
+            if ( $this->passwordErr === "" && $this->newpasswordErr === "" && $this->repeatnewpasswordErr === "") {
+                $this->valid = true; }
+        }
+    }
+
+    public function getPassword() {
+        return $this->password;
+    }
+
+    private function getLoggedInID() {
+        $userId = $_SESSION['user_id'];
+        return $userId;
     }
 
     public function doesEmailExist() {

@@ -100,7 +100,15 @@ class PageController {
                     $this->model->setPage('login'); 
                 }
                 break;
-            
+            case 'changepass':
+                require_once 'models/user_model.php';
+                $this->model = new UserModel($this->model);
+                $this->model->validateChangePass();
+                if ($this->model->valid) {
+                    ChangePass($data['newpassword']);
+                    $page = 'home';
+                }
+                break;
         }
     }
 }

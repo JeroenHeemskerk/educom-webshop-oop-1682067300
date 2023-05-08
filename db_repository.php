@@ -58,6 +58,7 @@ function findUserByEmail($email){
 }
 
 function findUserByID($id) {
+    require_once 'sessions.php';
     $conn = connectToDB();
     $id = getLoggedInID();
     try {
