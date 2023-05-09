@@ -7,7 +7,7 @@ class CartDoc extends ProductsDoc {
     }
     
     protected function showContent() {  
-        $cartContent = getCartContent();
+        $cartContent = $this->model->getCartContent();
         $onChange = "(this).closest('form').submit()";
         
         $cartline['action'] = "updateQuantity";
@@ -21,8 +21,8 @@ class CartDoc extends ProductsDoc {
                         echo '<img src="Images/'. $product["image"] . '" " alt="' . $product["name"] . '" class="cartproducts"></td></a>';
                         echo '<td>Product: '.$product["name"].'<br> Uitvoering:'.$product['size_id'].'<br> Materiaal: '.$product["material"].'';
                         $this->showFormStart('cartcontent');
-                        $this->showFormField('amount', 'Aantal:', 'number', $product, Null, 0, 99, $onChange);
-                        echo '<br><br> Prijs: &#8364;'.number_format((float)$product['subtotal'], 2, '.'.'').'';
+                        $this->showFormField('amount', 'Aantal:', 'number', Null, 0, 99, $onChange);
+                        echo '<br><br> Prijs: &#8364;'.number_format((float)$this->model->subtotal, 2, '.'.'').'';
                         $this->showFormField('price_id' , "", 'hidden', $product);
                         $this->showFormField('action', "", 'hidden', $cartline);
                         $this->showFormEnd('shoppingcart');        

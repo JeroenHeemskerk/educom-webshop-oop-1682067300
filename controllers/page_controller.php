@@ -57,6 +57,14 @@ class PageController {
                 require_once ('views/webshop_doc.php');
                 $view = new WebshopDoc($this->model);
                 break;
+            case 'detail' :
+                require_once ('views/detail_doc.php');
+                $view = new DetailDoc($this->model);
+                break;
+            case 'shoppingcart' :
+                require_once ('views/cart_doc.php');
+                $view = new CartDoc($this->model);
+                break;
         }
         if (!empty($view)) {
             $view->show();
@@ -109,8 +117,27 @@ class PageController {
                     $this->model->setPage('home');
                 }
                 break;
+            case 'webshop':
+                require_once 'models/shop_model.php';
+                $this->model = new ShopModel($this->model);
+                $this->model->handleAction();
+                $this->model->getProducts();
+                break;
+            case 'detail':
+                require_once 'models/shop_model.php';
+                $this->model = new ShopModel($this->model);
+                $this->model->handleAction();
+                $this->model->getDetailVar();
+                break;
+            case 'shoppingcart' :
+                require_once 'models/shop_model.php';
+                $this->model = new ShopModel($this->model);
+                $this->model->handleAction();
+                $this->model->getCartContent();
+                break;            
         }
     }
 }
+
 
 ?>

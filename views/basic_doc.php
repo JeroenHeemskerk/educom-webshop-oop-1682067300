@@ -26,7 +26,7 @@
 
         private function showMenu() { 
                 
-            echo    '<ul id="menu">';
+            echo '<ul id="menu">';
             foreach($this->model->menu as $menuOption)    {
                 $menuOption->showMenuOption();
             }

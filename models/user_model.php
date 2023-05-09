@@ -61,7 +61,7 @@ class UserModel extends PageModel {
             if  (empty(Util::getPostVar("password"))) {
                 $this->passwordErr="* Vul uw wachtwoord in";
             } else { 
-                $this->password=Util::test_input(getPostVar("password"));
+                $this->password=Util::test_input(Util::getPostVar("password"));
             }
             if ($this->emailErr === "" && $this->passwordErr === "") {
                 try {
@@ -185,7 +185,7 @@ class UserModel extends PageModel {
             if (empty(Util::getPostVar('password'))) {
                 $this->passwordErr="* Vul uw wachtwoord in";
                 } else {
-                $this->password=Util::test_input(getPostVar("password"));     
+                $this->password=Util::test_input(Util::getPostVar("password"));     
                 } 
             if (empty(Util::getPostVar('repeatpassword'))) {
                 $this->repeatpasswordErr="* Herhaal uw wachtwoord";
@@ -240,10 +240,6 @@ class UserModel extends PageModel {
             if ( $this->passwordErr === "" && $this->newpasswordErr === "" && $this->repeatnewpasswordErr === "") {
                 $this->valid = true; }
         }
-    }
-
-    public function getPassword() {
-        return $this->password;
     }
 
     private function getLoggedInID() {

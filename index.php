@@ -12,11 +12,11 @@
     // $data = processRequest($page);
     // showResponsePage($data);
 
-    function processRequest($page) {
-        include 'validations.php';
+    // function processRequest($page) {
+    //     include 'validations.php';
         
          
-        switch($page) {
+        // switch($page) {
             // case 'contact':
             //     $data = validateContact();
             //     if ($data['valid']) {
@@ -48,32 +48,32 @@
             //         $page = 'home';
             //     }
             //     break;
-            case 'webshop':
-                handleAction();
-                $data['products'] = getProducts();
-                break;
-            case 'detail':
-                handleAction();
-                break;
-            case 'shoppingcart' :
-                handleAction();
-                break;            
-            }
+            // case 'webshop':
+            //     handleAction();
+            //     $data['products'] = getProducts();
+            //     break;
+            // case 'detail':
+            //     handleAction();
+            //     break;
+            // case 'shoppingcart' :
+            //     handleAction();
+            //     break;            
+            // }
         
-        $data['page'] = $page;
-        $Menu = array("home" => "Home", "about" => "Over Mij", "contact" => "Contact", "webshop" => "Webshop");
-        if(!isUserLoggedIn()) {
-            $Menu['register'] = "Registreer";
-            $Menu['login'] = "Log in";
-        } else {
-            $Menu['shoppingcart'] = "Winkelmandje";
-            $Menu['changepass'] = "Wachtwoord wijzigen"; 
-            $Menu['logout'] = getLoggedInUserName() . " Uitloggen";
-        }
-        $data['menu'] = $Menu;
-        return $data;
+    //     $data['page'] = $page;
+    //     $Menu = array("home" => "Home", "about" => "Over Mij", "contact" => "Contact", "webshop" => "Webshop");
+    //     if(!isUserLoggedIn()) {
+    //         $Menu['register'] = "Registreer";
+    //         $Menu['login'] = "Log in";
+    //     } else {
+    //         $Menu['shoppingcart'] = "Winkelmandje";
+    //         $Menu['changepass'] = "Wachtwoord wijzigen"; 
+    //         $Menu['logout'] = getLoggedInUserName() . " Uitloggen";
+    //     }
+    //     $data['menu'] = $Menu;
+    //     return $data;
 
-    }
+    // }
     
     function getArrayVar($array, $key, $default = '') {
         return isset($array[$key]) ? $array[$key] : $default;
@@ -87,65 +87,65 @@
         return getArrayVar($_GET, $key, $default);
     }
   
-    function getRequestedPage() {
-        if ($_SERVER["REQUEST_METHOD"] == "POST") { 
-            return getPostVar("page", "home"); 
-        } else { 
-            return getUrlVar("page", "home"); 
-        }
-    }
+    // function getRequestedPage() {
+    //     if ($_SERVER["REQUEST_METHOD"] == "POST") { 
+    //         return getPostVar("page", "home"); 
+    //     } else { 
+    //         return getUrlVar("page", "home"); 
+    //     }
+    // }
     
 
-    function showResponsePage($data) { 
-        $view=null;
-        switch($data['page']) { 
-            // case 'home':
-            //     require_once('views/home_doc.php');
-            //     $view = new HomeDoc($data);
-            //     break;
-            // case 'about':
-            //     require_once('views/about_doc.php');
-            //     $view = new AboutDoc($data);
-            //     break;
-            case 'contact':
-                require_once('views/contact_doc.php');
-                $view = new ContactDoc($data);
-                break;
-            case 'register' :
-                require_once('views/register_doc.php');
-                $view = new RegisterDoc($data);
-                break;
-            case 'thanks' :
-                require_once('views/thanks_doc.php');
-                $view = new ThanksDoc($data);
-                break;         
-            // case 'login' :
-            //     require_once ('views/login_doc.php');
-            //     $view = new LoginDoc($data);
-            //     break;
-            case 'webshop' :
-                require_once ('views/webshop_doc.php');
-                $view = new WebshopDoc($data);
-                break;
-            case 'detail' :
-                require_once ('views/detail_doc.php');
-                $view = new DetailDoc($data);
-                break;
-            case 'shoppingcart' :
-                require_once ('views/cart_doc.php');
-                $view = new CartDoc($data);
-                break;
-            case 'changepass' :
-                require_once ('views/change_pass_doc.php');
-                $view = new ChangePassDoc($data);
-                break;
-            default:
-                echo 'ERROR 404: Page not found.';
-            }
-        if (!empty($view)) {
-            $view->show();
-        }
-    }  
+    // function showResponsePage($data) { 
+    //     $view=null;
+    //     switch($data['page']) { 
+    //         // case 'home':
+    //         //     require_once('views/home_doc.php');
+    //         //     $view = new HomeDoc($data);
+    //         //     break;
+    //         // case 'about':
+    //         //     require_once('views/about_doc.php');
+    //         //     $view = new AboutDoc($data);
+    //         //     break;
+    //         case 'contact':
+    //             require_once('views/contact_doc.php');
+    //             $view = new ContactDoc($data);
+    //             break;
+    //         case 'register' :
+    //             require_once('views/register_doc.php');
+    //             $view = new RegisterDoc($data);
+    //             break;
+    //         case 'thanks' :
+    //             require_once('views/thanks_doc.php');
+    //             $view = new ThanksDoc($data);
+    //             break;         
+    //         // case 'login' :
+    //         //     require_once ('views/login_doc.php');
+    //         //     $view = new LoginDoc($data);
+    //         //     break;
+    //         case 'webshop' :
+    //             require_once ('views/webshop_doc.php');
+    //             $view = new WebshopDoc($data);
+    //             break;
+    //         case 'detail' :
+    //             require_once ('views/detail_doc.php');
+    //             $view = new DetailDoc($data);
+    //             break;
+    //         case 'shoppingcart' :
+    //             require_once ('views/cart_doc.php');
+    //             $view = new CartDoc($data);
+    //             break;
+    //         case 'changepass' :
+    //             require_once ('views/change_pass_doc.php');
+    //             $view = new ChangePassDoc($data);
+    //             break;
+    //         default:
+    //             echo 'ERROR 404: Page not found.';
+    //         }
+    //     if (!empty($view)) {
+    //         $view->show();
+    //     }
+    // }  
     
     function showGenericErr($data) {
         if (isset($data['genericErr'])) {

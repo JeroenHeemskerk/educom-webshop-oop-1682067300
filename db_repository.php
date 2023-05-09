@@ -125,12 +125,10 @@ function selectProducts() {
     return $products;
 }
 
-function findProductByIdSizeAndMaterial($productId, $sizeId, $materialId) {
+function findProductById($productId) {
     $conn = connectToDB();
     try {
         $productId = mysqli_real_escape_string($conn, $productId);
-        $sizeId = mysqli_real_escape_string($conn, $sizeId);
-        $materialId = mysqli_real_escape_string($conn, $materialId);
 
         // 1. get the product details
         $sql = "SELECT * FROM products WHERE id=$productId";
@@ -139,6 +137,9 @@ function findProductByIdSizeAndMaterial($productId, $sizeId, $materialId) {
             throw new Exception("Query 1 failed, SQL: " . $sql . " Error: " . mysqli_error($conn));
         }
         $product = mysqli_fetch_assoc($result);
+        if (empty($product)) {
+            return null;
+        }
 
         // 2. get all flavours for this product
         $sql = "SELECT pp.id as 'price_id', s.id as 'size_id', s.size, m.id as 'material_id', m.material, price
@@ -154,23 +155,32 @@ function findProductByIdSizeAndMaterial($productId, $sizeId, $materialId) {
         while ($row = mysqli_fetch_assoc($result)) {
             $product['flavours'][$row['price_id']] = $row;
         }
+        return $product;
+    }
+    finally {
+        closeDB($conn);
+    }
+}
+function findPropertiesByPriceId($priceId) {
+    $conn = connectToDB();
+    $properties = array();
+    try {    
         // 3. get all properties of the give size (and material)
         $sql = "SELECT pp.id as 'pp_id', p.name, pp.value, p.unit
-                FROM product_properties as pp
-                JOIN properties as p ON p.id=pp.property_id
-                JOIN product_sizes as ps ON ps.id=pp.product_size_id
-                LEFT JOIN product_price ON pp.product_price_id=product_price.id
-                WHERE ps.product_id=$productId AND ps.size_id='$sizeId' AND 
-                      (pp.product_price_id is NULL or product_price.material_id = $materialId)";
+        FROM product_properties as pp
+        JOIN properties as p ON p.id=pp.property_id
+        JOIN product_sizes as ps ON ps.id=pp.product_size_id
+        JOIN product_price ON ps.id=product_price.product_size_id
+        WHERE product_price.id=$priceId AND (pp.product_price_id is null OR pp.product_price_id = product_price.id);";
                 
         $result = mysqli_query($conn, $sql);
         if ($result == false) {
             throw new Exception("Query 3 failed, SQL: " . $sql . " Error: " . mysqli_error($conn));
         }
         while ($row = mysqli_fetch_assoc($result)) {
-            $product['properties'][$row['pp_id']] = $row;
+            $properties[$row['pp_id']] = $row;
         }
-        return $product; 
+        return $properties; 
     }
     finally {
         closeDB($conn);
