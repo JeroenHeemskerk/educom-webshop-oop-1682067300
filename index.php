@@ -17,37 +17,37 @@
         
          
         switch($page) {
-            case 'contact':
-                $data = validateContact();
-                if ($data['valid']) {
-                    $page = 'thanks'; 
-                }
-                break;
-            case 'register' :
-                $data = validateRegister();
-                if ($data['valid']) {
-                    storeUser($data['email'], $data['name'], $data['password']);    
-                    $page = 'login'; 
-                }
-                break;
-            case 'login' : 
-                $data = validateLogin();
-                if ($data['valid']) {
-                    loginUser($data['name'], $data['id']);
-                    $page = 'home';
-                }
-                break;
-            case 'logout' :
-                logoutUser();
-                $page = 'home';
-                break;
-            case 'changepass':
-                $data = validateChangePass();
-                if ($data['valid']) {
-                    ChangePass($data['newpassword']);
-                    $page = 'home';
-                }
-                break;
+            // case 'contact':
+            //     $data = validateContact();
+            //     if ($data['valid']) {
+            //         $page = 'thanks'; 
+            //     }
+            //     break;
+            // case 'register' :
+            //     $data = validateRegister();
+            //     if ($data['valid']) {
+            //         storeUser($data['email'], $data['name'], $data['password']);    
+            //         $page = 'login'; 
+            //     }
+            //     break;
+            // case 'login' : 
+            //     $data = validateLogin();
+            //     if ($data['valid']) {
+            //         loginUser($data['name'], $data['id']);
+            //         $page = 'home';
+            //     }
+            //     break;
+            // case 'logout' :
+            //     logoutUser();
+            //     $page = 'home';
+            //     break;
+            // case 'changepass':
+            //     $data = validateChangePass();
+            //     if ($data['valid']) {
+            //         ChangePass($data['newpassword']);
+            //         $page = 'home';
+            //     }
+            //     break;
             case 'webshop':
                 handleAction();
                 $data['products'] = getProducts();

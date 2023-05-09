@@ -41,7 +41,7 @@ class PageController {
                 require_once ('views/register_doc.php');
                 $view = new RegisterDoc($this->model);
                 break;
-            case 'changepass' :
+            case 'changepassword' :
                 require_once ('views/change_pass_doc.php');
                 $view = new ChangePassDoc($this->model);
                 break;
@@ -100,13 +100,13 @@ class PageController {
                     $this->model->setPage('login'); 
                 }
                 break;
-            case 'changepass':
+            case 'changepassword':
                 require_once 'models/user_model.php';
                 $this->model = new UserModel($this->model);
                 $this->model->validateChangePass();
                 if ($this->model->valid) {
-                    ChangePass($data['newpassword']);
-                    $page = 'home';
+                    $this->model->ChangePass();
+                    $this->model->setPage('home');
                 }
                 break;
         }

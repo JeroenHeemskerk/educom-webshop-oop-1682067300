@@ -76,6 +76,10 @@ function findUserByID($id) {
     }
 }
 
+function getLoggedInID() {
+    return $_SESSION['user_id'];
+}
+
 function updateUserPass($password) {
     $conn = connectToDB();
     

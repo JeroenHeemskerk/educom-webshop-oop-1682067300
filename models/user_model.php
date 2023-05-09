@@ -233,7 +233,7 @@ class UserModel extends PageModel {
                     $this->repeatnewpasswordErr ="* Uw wachtwoorden zijn niet gelijk";
                 }
             }
-            if ($this->password !== $this->user->getPassword()) {
+            if ($this->password !== $this->user['password']) {
                 $this->passwordErr="* Vul het juiste wachtwoord in";
             }
     
@@ -247,8 +247,7 @@ class UserModel extends PageModel {
     }
 
     private function getLoggedInID() {
-        $userId = $_SESSION['user_id'];
-        return $userId;
+        return $_SESSION['user_id'];   
     }
 
     public function doesEmailExist() {
@@ -262,6 +261,10 @@ class UserModel extends PageModel {
 
     public function StoreUser() {
         saveNewUser($this->email, $this->name, $this->password);
+    }
+
+    function ChangePass() {
+        updateUserPass($this->newpassword);
     }
 }
 
