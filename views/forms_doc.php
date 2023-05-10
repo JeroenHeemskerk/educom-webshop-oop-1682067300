@@ -39,11 +39,11 @@ abstract class FormsDoc extends BasicDoc {
                 echo '<span class="error"> ' . $this->model->$error . ' </span><br><br>' . PHP_EOL;
             }
     }
-    
-    // protected function showError($field) {
-    //         echo '<span class="error"> ' . $field . 'Err</span><br>' . PHP_EOL;
-    //     }
-    
+
+    protected function showHiddenFormButton($field, $value) {
+        echo '<input type="hidden" id="' . $field . '" name="' . $field . '" value="' . $value . '">';
+    }
+       
     
     protected function showFormButton($submitButton, $action) {
         

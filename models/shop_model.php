@@ -33,6 +33,7 @@ class ShopModel extends PageModel {
     public $cartContent = array();
     public $subtotal = 0;
     public $total = 0;
+    public $updatedQuantity = 0;
 
     public function __construct($pageModel) {
         PARENT::__construct($pageModel);
@@ -127,12 +128,12 @@ class ShopModel extends PageModel {
                 }
                 break;
             case "updateQuantity" :
-                $updatedQuantity = Util::getPostVar("amount");
-                $priceId = Util::getPostVar("price_id");
-                if ($updatedQuantity != 0) {
-                    $this->sessionManager->updateCart($priceId, $updatedQuantity);
+                $this->updatedQuantity = Util::getPostVar("amount");
+                $this->priceId = Util::getPostVar("price_id");
+                if ($this->updatedQuantity != 0) {
+                    $this->sessionManager->updateCart($this->priceId, $this->updatedQuantity);
                 } else {
-                    $this->sessionManager->removeFromCart($priceId);
+                    $this->sessionManager->removeFromCart($this->priceId);
                 }
                 break;
             case "Bestellen" :

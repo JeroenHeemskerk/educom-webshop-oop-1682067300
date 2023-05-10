@@ -23,8 +23,8 @@ class CartDoc extends ProductsDoc {
                         $this->showFormStart('cartcontent');
                         $this->showFormField('amount', 'Aantal:', 'number', Null, 0, 99, $onChange);
                         echo '<br><br> Prijs: &#8364;'.number_format((float)$this->model->subtotal, 2, '.'.'').'';
-                        $this->showFormField('price_id' , "", 'hidden', $product);
-                        $this->showFormField('action', "", 'hidden', $cartline);
+                        $this->showHiddenFormButton('price_id', $product['price_id']);
+                        $this->showHiddenFormButton('action', 'updateQuantity');
                         $this->showFormEnd('shoppingcart');        
                         echo '</td></tr>';
                         echo '</table>';
