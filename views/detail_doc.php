@@ -40,16 +40,14 @@
             $this->showFormStart('product');
             $this->showFormField('flavour', 'Maat:', 'select', $sizeOptions, null, null, $onChange);
             $this->showFormField('material', 'Materiaal', 'select', $materialOptions, null, null, $onChange);
-            $this->showFormEnd('detail');
             if (!$this->model->canOrder) {
                 $this->showFormEnd("detail");
                 echo '<br>';
             } else { 
-                echo '<br>';
                 $this->showFormField('amount', 'Aantal', 'number', NULL, 1, 99, NULL);
                 echo '<br>';
-                $this->showFormButton("Toevoegen", "action");
-                $this->showFormEnd("detail");
+                $this->showFormButton('Toevoegen', 'action');
+                $this->showFormEnd('detail');
                 echo '<br>';   
             }
             echo '<div class="descriptionheader">';
@@ -64,6 +62,7 @@
             foreach ($this->model->properties as $property) {
                 echo '<li>' . $property["name"] .": " . $property['value'] . ' ' . $property['unit'] . '</li>';
             }
+            echo '</ul>';
             echo '</div>';
         }
     }

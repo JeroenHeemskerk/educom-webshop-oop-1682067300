@@ -43,6 +43,11 @@ abstract class FormsDoc extends BasicDoc {
     protected function showHiddenFormButton($field, $value) {
         echo '<input type="hidden" id="' . $field . '" name="' . $field . '" value="' . $value . '">';
     }
+
+    protected function showFormFieldNumber($field, $label, $value, $min, $max, $onChange) {
+        echo '<laber for="' . $label . '">' . $label . '</label>';
+        echo '<input type="number" id="' . $field . '" name="' . $field . '" value="' . $value . '" min="' . $min . '" max="' . $max . '" onchange="' . $onChange . '">';
+    }
        
     
     protected function showFormButton($submitButton, $action) {

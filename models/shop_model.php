@@ -102,9 +102,9 @@ class ShopModel extends PageModel {
                 $this->cartlines[] = $this->cartline;
                 $this->total += $this->subtotal;
                 }
-                return array('cartlines'=>$this->cartlines, 'total' => $this->total);
-            } else {
-            return null;
+                return array('cartlines'=> $this->cartlines, 'total' => $this->total);
+            // } else {
+            // return null;
             }
     }
 
@@ -128,12 +128,12 @@ class ShopModel extends PageModel {
                 }
                 break;
             case "updateQuantity" :
-                $this->updatedQuantity = Util::getPostVar("amount");
-                $this->priceId = Util::getPostVar("price_id");
-                if ($this->updatedQuantity != 0) {
-                    $this->sessionManager->updateCart($this->priceId, $this->updatedQuantity);
+                $updatedQuantity = Util::getPostVar("amount");
+                $priceId = Util::getPostVar("price_id");
+                if ($updatedQuantity != 0) {
+                    $this->sessionManager->updateCart($priceId, $updatedQuantity);
                 } else {
-                    $this->sessionManager->removeFromCart($this->priceId);
+                    $this->sessionManager->removeFromCart($priceId);
                 }
                 break;
             case "Bestellen" :

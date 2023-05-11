@@ -1,28 +1,28 @@
 <?php
 
 class SessionManager {
-    function loginUser($name, $id) {
+    public function loginUser($name, $id) {
         $_SESSION['login'] = $name;
         $_SESSION['user_id'] = $id;
         $_SESSION['cart'] = array();
     }
     
-    function isUserLoggedIn() {
+    public function isUserLoggedIn() {
         return isset($_SESSION['login']);
     }
-    function getLoggedInUserName() {
+    public function getLoggedInUserName() {
         return $_SESSION['login'];
     }
 
-    function getLoggedInID() {
+    public function getLoggedInID() {
         return $_SESSION['user_id'];
     }
     
-    function logoutUser() {
+    public function logoutUser() {
         unset($_SESSION['login']);
     }
 
-    function addToCart($priceId, $amount) {
+    public function addToCart($priceId, $amount) {
         if(isset($_SESSION['cart'][$priceId])){
         $_SESSION['cart'][$priceId] += $amount;
         } else { 
@@ -30,18 +30,18 @@ class SessionManager {
         }
     }
 
-    function updateCart($priceId, $amount) {
+    public function updateCart($priceId, $amount) {
         $_SESSION['cart'][$priceId] = $amount;
     }
-    function removeFromCart($priceId) {
+    public function removeFromCart($priceId) {
         unset($_SESSION['cart'][$priceId]);
     }
 
-    function getCart(){
+    public function getCart(){
         return $_SESSION['cart'];
     }
 
-    function emptyCart() {
+    public function emptyCart() {
         $_SESSION['cart'] = array();
     }
 }
