@@ -12,6 +12,7 @@ class PageModel {
     public $genericErr = '';
     protected $sessionManager;
     protected $valid = false;
+    protected $crud;
 
     public function __construct($copy) {
         if (empty($copy)) {

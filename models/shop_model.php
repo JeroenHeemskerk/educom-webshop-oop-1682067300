@@ -35,13 +35,14 @@ class ShopModel extends PageModel {
     public $total = 0;
     public $updatedQuantity = 0;
 
-    public function __construct($pageModel) {
+    public function __construct($pageModel, $shopcrud) {
         PARENT::__construct($pageModel);
         $this->canOrder = $this->sessionManager->isUserLoggedIn();
+        $this->crud = $shopcrud;
     }
 
     public function getProducts(){
-        $this->products = selectProducts();
+        $this->products = $this->crud->readAllProducts();
     }
     public function getDetailVar() {
         if ($this->isPost) {

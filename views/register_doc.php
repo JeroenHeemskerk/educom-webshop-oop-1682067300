@@ -7,10 +7,10 @@ class RegisterDoc extends FormsDoc {
     }
     private function showForm() {
         $this->showFormStart('register');
-        $this->showFormField('email', 'E-mailadres:', 'email', $this->model);
-        $this->showFormField('name', 'Naam', 'text', $this->model);
-        $this->showFormField('password', 'Wachtwoord:', 'password', $this->model);
-        $this->showFormField('repeatpassword', 'Herhaal uw wachtwoord:', 'password', $this->model);
+        $this->showFormField('email', 'E-mailadres:', 'email');
+        $this->showFormField('name', 'Naam', 'text');
+        $this->showFormField('password', 'Wachtwoord:', 'password');
+        $this->showFormField('repeatpassword', 'Herhaal uw wachtwoord:', 'password');
         $this->showFormButton('Registreren', 'action');
         $this->showFormEnd('register');
     }

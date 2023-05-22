@@ -1,8 +1,6 @@
 <?php
 require_once 'page_model.php';
 require_once 'sessions.php';
-require_once 'db_repository.php';
-// require_once 'Util.php';
 
 define("RESULT_OK", 0);
 define("RESULT_WRONG_PASSWORD", -1);
@@ -38,12 +36,13 @@ class UserModel extends PageModel {
     public $genericErr = '';
     public $valid = false;
 
-    public function __construct($pageModel) {
+    public function __construct($pageModel, $userCrud) {
         PARENT::__construct($pageModel);
+        $this->crud = $userCrud;
 
         if($this->sessionManager->isUserLoggedIn()){
             // Create a logged in user object 
-            $this->user = findUserById($this->sessionManager->getLoggedInID('id'));
+            $this->user = $this->crud->readUserById($this->sessionManager->getLoggedInID('id'));
           }
     }
 
@@ -69,8 +68,8 @@ class UserModel extends PageModel {
                     switch($authenticate['result']) {
                         case VALID_LOGIN:
                             $this->valid = true;
-                            $this->name = $authenticate['user']['name'];
-                            $this->userId = $authenticate['user']['id'];
+                            $this->name = $authenticate['user']->name;
+                            $this->userId = $authenticate['user']->id;
                             break;
                         case WRONG_PASSWORD:
                             $this->passwordErr = "Verkeerd wachtwoord.";
@@ -89,13 +88,14 @@ class UserModel extends PageModel {
     }
 
     private function authenticateUser($email, $password) {
-        $user = findUserByEmail($email);
+        $user = $this->crud->readUserByEmail($email);
         if (empty($user)) {
             return array("result" => WRONG_EMAIL, "user" => $user);
         }
-        if ($user['password'] != $password) {
+        if ($user->password != $password) {
             return array("result" => WRONG_PASSWORD, "user" => $user);
         }
+        $this->userId = $user->id;
         return array("result" => VALID_LOGIN, "user" => $user);
     }
 
@@ -213,8 +213,7 @@ class UserModel extends PageModel {
     }
 
     function validateChangePass() {
-        $this->user = findUserByID($this->getLoggedInID());        
-    
+        $this->user = $this->crud->readUserByID($this->getLoggedInID());        
         if ($this->isPost) {
             if (empty(Util::getPostVar('password'))) {
                 $this->passwordErr="* Vul uw wachtwoord in";
@@ -233,7 +232,9 @@ class UserModel extends PageModel {
                     $this->repeatnewpasswordErr ="* Uw wachtwoorden zijn niet gelijk";
                 }
             }
-            if ($this->password !== $this->user['password']) {
+            
+            if ($this->password !== $this->user->password) {
+
                 $this->passwordErr="* Vul het juiste wachtwoord in";
             }
     
@@ -247,7 +248,7 @@ class UserModel extends PageModel {
     }
 
     public function doesEmailExist() {
-        $user = findUserByEmail($this->email);
+        $user = $this->crud->readUserByEmail($this->email);
         if (empty($user)) {
         return false;
         } else {
@@ -256,11 +257,12 @@ class UserModel extends PageModel {
     }
 
     public function StoreUser() {
-        saveNewUser($this->email, $this->name, $this->password);
+        $this->crud->createUser($this->email, $this->name, $this->password);
     }
 
     function ChangePass() {
-        updateUserPass($this->newpassword);
+        $this->user->password = $this->newpassword;
+        $this->crud->updateUser($this->user);
     }
 }
 

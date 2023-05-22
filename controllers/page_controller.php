@@ -5,9 +5,11 @@ require_once ('models/page_model.php');
 
 class PageController {
     private $model;
+    private $modelFactory;
     
-    public function __construct() {
+    public function __construct($modelFactory) {
         $this->model = new PageModel(NULL);
+        $this->modelFactory = $modelFactory;
     }
 
     public function handleRequest() {
@@ -78,7 +80,8 @@ class PageController {
         switch($this->model->page) {
             case 'login' :
                 require_once 'models/user_model.php';
-                $this->model = new UserModel($this->model);
+                $this->modelFactory->pageModel = $this->model;
+                $this->model = $this->modelFactory->createModel('user');
                 $this->model->validateLogin();
                 if($this->model->valid) {
                     $this->model->doLoginUser();
@@ -87,13 +90,15 @@ class PageController {
                 break;
             case 'logout' :
                 require_once 'models/user_model.php';
-                $this->model = new UserModel($this->model);
+                $this->modelFactory->pageModel = $this->model;
+                $this->model = $this->modelFactory->createModel('user');
                 $this->model->doLogoutuser();
                 $this->model->setPage('home');
                 break;
             case 'contact':
                 require_once 'models/user_model.php';
-                $this->model = new UserModel($this->model);
+                $this->modelFactory->pageModel = $this->model;
+                $this->model = $this->modelFactory->createModel('user');
                 $this->model->validateContact();
                 if ($this->model->valid) {
                     $this->model->setPage('thanks'); 
@@ -101,16 +106,18 @@ class PageController {
                 break;
             case 'register' :
                 require_once 'models/user_model.php';
-                $this->model = new UserModel($this->model);
+                $this->modelFactory->pageModel = $this->model;
+                $this->model = $this->modelFactory->createModel('user');
                 $this->model->validateRegister();
                 if ($this->model->valid) {
-                    $this->model->storeUser();    
-                    $this->model->setPage('login'); 
-                }
+                    $this->model->StoreUser();  
+                    $this->model->setPage('login');
+                }    
                 break;
             case 'changepassword':
                 require_once 'models/user_model.php';
-                $this->model = new UserModel($this->model);
+                $this->modelFactory->pageModel = $this->model;
+                $this->model = $this->modelFactory->createModel('user');
                 $this->model->validateChangePass();
                 if ($this->model->valid) {
                     $this->model->ChangePass();
@@ -119,19 +126,22 @@ class PageController {
                 break;
             case 'webshop':
                 require_once 'models/shop_model.php';
-                $this->model = new ShopModel($this->model);
+                $this->modelFactory->pageModel = $this->model;
+                $this->model = $this->modelFactory->createModel('webshop');
                 $this->model->handleAction();
                 $this->model->getProducts();
                 break;
             case 'detail':
                 require_once 'models/shop_model.php';
-                $this->model = new ShopModel($this->model);
+                $this->modelFactory->pageModel = $this->model;
+                $this->model = $this->modelFactory->createModel('webshop');
                 $this->model->handleAction();
                 $this->model->getDetailVar();
                 break;
             case 'shoppingcart' :
                 require_once 'models/shop_model.php';
-                $this->model = new ShopModel($this->model);
+                $this->modelFactory->pageModel = $this->model;
+                $this->model = $this->modelFactory->createModel('webshop');
                 $this->model->handleAction();
                 $this->model->getCartContent();
                 break;            
