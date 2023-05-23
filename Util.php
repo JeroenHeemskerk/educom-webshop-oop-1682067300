@@ -14,7 +14,7 @@ class Util {
         return getArrayVar($_GET, $key, $default);
     }
     public static function generateKey($productId, $flavour) {
-        return $productId . "_" . $flavour['size_id'] . "_" . $flavour['material_id'] . "_" . $flavour['price_id'];   
+        return $productId . "_" . $flavour->size_id . "_" . $flavour->material_id . "_" . $flavour->price_id;   
     }
     public static function test_input($data) {
         $data = trim($data);

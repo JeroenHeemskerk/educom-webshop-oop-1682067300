@@ -18,22 +18,22 @@
             }
             
             echo '<div class="productheader">
-                    <h1>' . $product["name"] . '</h1>
+                    <h1>' . $product->name . '</h1>
                   </div>';
             echo '<div class=imgdetail>
-                    <img src="Images/' . $product["image"] . '" alt="' . $product["name"] . '" class="detail">
+                    <img src="Images/' . $product->image . '" alt="' . $product->name . '" class="detail">
                   </div>';
             echo '<div class="productprice">
-                    <h2>&#8364;' . $this->model->currentFlavour["price"] . '</h2>';
+                    <h2>&#8364;' . $this->model->currentFlavour->price . '</h2>';
             $sizeOptions = array();
             $materialOptions = array();
-            foreach ($product['flavours'] as $flav)  {
+            foreach ($product->flavours as $flav)  {
                 $flav_key = Util::generateKey($this->model->productId, $flav);
-                if ($flav['size_id'] == $this->model->sizeId) {
-                    $materialOptions[$flav_key] = "Materiaal: " . $flav["material"];
+                if ($flav->size_id == $this->model->sizeId) {
+                    $materialOptions[$flav_key] = "Materiaal: " . $flav->material;
                 }
-                if ($flav['material_id'] == $this->model->materialId) {
-                    $sizeOptions[$flav_key] = "Maat: " . $flav['size']; 
+                if ($flav->material_id == $this->model->materialId) {
+                    $sizeOptions[$flav_key] = "Maat: " . $flav->size; 
                 }
             }
             $onChange="window.location=makeDetailLink(this.value)";
@@ -53,14 +53,14 @@
             echo '<div class="descriptionheader">';
             echo '<h3>Productomschrijving</h3>';
             echo '<div class="description">';
-            echo  $product["description"];
+            echo  $product->description;
             echo '</div>';
             echo '</div>';
             echo '<div class="properties">';
             echo '<h4>Producteigenschappen</h4>';
             echo '<ul>';
             foreach ($this->model->properties as $property) {
-                echo '<li>' . $property["name"] .": " . $property['value'] . ' ' . $property['unit'] . '</li>';
+                echo '<li>' . $property->name .": " . $property->value . ' ' . $property->unit . '</li>';
             }
             echo '</ul>';
             echo '</div>';

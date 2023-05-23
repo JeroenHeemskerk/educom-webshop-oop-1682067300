@@ -257,7 +257,11 @@ class UserModel extends PageModel {
     }
 
     public function StoreUser() {
-        $this->crud->createUser($this->email, $this->name, $this->password);
+        $newUser = new User();
+        $newUser->setEmail($this->email);
+        $newUser->setName($this->name);
+        $newUser->setPassword($this->password);
+        $this->crud->createUser($newUser);
     }
 
     function ChangePass() {

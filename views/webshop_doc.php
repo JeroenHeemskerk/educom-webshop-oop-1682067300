@@ -9,11 +9,11 @@ class WebshopDoc extends ProductsDoc {
     }
 
     protected function showProduct($product) {
-        $price_id = key($product['flavours']);
-        $flavour = $product['flavours'][$price_id];
-        echo '<a id="details_'.$product['id'].'" href="index.php?page=detail&id=' . $product["id"] . '&size='.$flavour['size_id'].'&material='.$flavour['material_id'].'&price='.$flavour['price_id'].'">';
-        echo '<h2 id="producttitle">' . $product["name"] . '</h2>';  
-        echo '<img src="Images/'. $product["image"] . '" " alt="' . $product["name"] . '" class="img">';
+        $price_id = key($product->flavours);
+        $flavour = $product->flavours[$price_id];
+        echo '<a id="details_'.$product->id.'" href="index.php?page=detail&id=' . $product->id . '&size='.$flavour->size_id.'&material='.$flavour->material_id.'&price='.$flavour->price_id.'">';
+        echo '<h2 id="producttitle">' . $product->name . '</h2>';  
+        echo '<img src="Images/'. $product->image . '" " alt="' . $product->name . '" class="img">';
         echo '</a>';
     }
 
@@ -23,9 +23,9 @@ class WebshopDoc extends ProductsDoc {
         foreach($this->model->products as $product) {
             $this->showProduct($product);
             $options = array();
-            foreach($product['flavours'] as $key => $flavour) {
+            foreach($product->flavours as $flavour) {
 
-                $options[Util::generateKey($product['id'], $flavour)] = 'Maat: ' . $flavour['size'] . ', Materiaal: ' . $flavour['material'] . ', Prijs: &#8364;' . $flavour['price'];
+                $options[Util::generateKey($product->id, $flavour)] = 'Maat: ' . $flavour->size . ', Materiaal: ' . $flavour->material . ', Prijs: &#8364;' . $flavour->price;
             }
             $this->showFormStart('product');
             $this->showFormField('flavour', 'Keuze', 'select', $options, null, null, $onChange);

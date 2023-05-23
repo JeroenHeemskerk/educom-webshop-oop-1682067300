@@ -1,6 +1,6 @@
 <?php 
 require_once 'models/page_model.php';
-require_once 'db_repository.php';
+// require_once 'db_repository.php';
 require_once 'sessions.php';
 
 class ShopModel extends PageModel {
@@ -41,9 +41,11 @@ class ShopModel extends PageModel {
         $this->crud = $shopcrud;
     }
 
-    public function getProducts(){
+    public function getProducts() {
         $this->products = $this->crud->readAllProducts();
+        //var_dump($this->products);
     }
+
     public function getDetailVar() {
         if ($this->isPost) {
             $productflavour = getPostVar("flavour");
@@ -58,20 +60,20 @@ class ShopModel extends PageModel {
             $this->materialId = getUrlVar("material");
             $this->priceId = getUrlVar('price');
         }
-        $this->product = findProductById($this->productId);
+        $this->product = $this->crud->findProductById($this->productId);
         if (empty($this->product)) {
             return;
         }
         $this->currentFlavour = null;
-        if (array_key_exists($this->priceId, $this->product['flavours'])) {
-            $this->currentFlavour = $this->product['flavours'][$this->priceId];
-            if ($this->currentFlavour['size_id'] != $this->sizeId || $this->currentFlavour['material_id']!=$this->materialId) {
-                $this->currentFlavour=null;
-            }
-        } 
+        // if (array_key_exists($this->priceId, $this->product)) {
+        //     $this->currentFlavour = $this->product[$this->priceId];
+        //     if ($this->currentFlavour['size_id'] != $this->sizeId || $this->currentFlavour['material_id']!=$this->materialId) {
+        //         $this->currentFlavour=null;
+        //     }
+        // } 
         if (empty($this->currentFlavour)) {
-            foreach ($this->product['flavours'] as $flav)  {
-                if ($flav['size_id'] == $this->sizeId && $flav['material_id']==$this->materialId) {
+            foreach ($this->product->flavours as $flav)  {
+                if ($flav->size_id == $this->sizeId && $flav->material_id==$this->materialId) {
                     $this->currentFlavour = $flav;
                     break;
                 }
@@ -84,7 +86,7 @@ class ShopModel extends PageModel {
             $this->materialId = $this->currentFlavour['material_id'];
         }
         $this->flavour=$this->material=Util::generateKey($this->productId, $this->currentFlavour);
-        $this->properties = findPropertiesByPriceId($this->priceId);
+        $this->properties = $this->crud->findPropertiesByPriceId($this->priceId);
 
     }
     
