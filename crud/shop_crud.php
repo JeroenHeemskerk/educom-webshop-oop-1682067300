@@ -69,6 +69,53 @@ class ShopCrud {
        
     return $properties; 
     }
+
+    public function readProductsByPriceId($priceIds) {
+        $products= array();
+        $params = array();
+        $returnproducts = array();
+        $counter = 0;
+        $commaSeperatedList = implode(',', $priceIds);
+
+        $sql = "SELECT p.id as 'id', p.name, p.image,s.id as 'size_id', s.size, m.id as 'material_id', m.material, pp.price
+            FROM product_price as pp
+            JOIN product_sizes as ps ON ps.id=pp.product_size_id
+            JOIN materials as m ON m.id=pp.material_id
+            JOIN products as p ON p.id=ps.product_id
+            JOIN sizes as s ON s.id=ps.size_id
+            WHERE pp.id IN ($commaSeperatedList)";
+
+        $products = $this->crud->readMultipleRows($sql, $params, null, 'product');
+        foreach($products as $product) {
+            $returnproducts[$priceIds[$counter]] = $product;
+            $counter++;
+        }
+        return $returnproducts;
+    }
+
+    public function createOrder($user_id, $cartContent){
+        try {
+            $this->crud->pdo->beginTransaction();
+    
+            $sql = "INSERT INTO invoice (date, user_id) VALUE(CURRENT_DATE(), :id)";
+            $params = array(':id'=>$user_id);
+    
+            $last_id = $this->crud->createRow($sql, $params);
+    
+            foreach($cartContent as $priceId=>$amount){
+                $sql = "INSERT INTO invoice_row (invoice_id, product_price_id, amount) VALUES(:last_id, :product_price_id, :amount)";
+                $params = array(':last_id'=>$last_id , ':product_price_id'=>$priceId, ':amount'=>$amount);
+                $this->crud->createRow($sql, $params);
+            }
+            $this->crud->pdo->commit();
+    
+        } catch(PDOException $e) {
+            $this->crud->pdo->rollBack();
+            throw $e;
+        }
+    
+
+    }
 }
 
 ?>

@@ -34,16 +34,16 @@ class Crud {
 
     public function createRow($sql, $params = array()) {
         $this->prepareAndBind($sql, $params);
-        return $this -> pdo -> lastInsertId();
+        return $this->pdo->lastInsertId();
     }
 
     public function readOneRow($sql, $params = array(), $class = NULL) {
-        $stmt = $this -> prepareAndBind($sql, $params, $class);
+        $stmt = $this->prepareAndBind($sql, $params, $class);
         return $stmt->fetch();
     }
 
     public function readMultipleRows($sql, $params = array(), $keyname = NULL, $class = NULL) {
-        $stmt = $this -> prepareAndBind($sql, $params, $class);
+        $stmt = $this->prepareAndBind($sql, $params, $class);
         $results = $stmt->fetchAll();
         //var_dump($results);
         if (empty($keyname)) {

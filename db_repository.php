@@ -187,7 +187,7 @@ function findPropertiesByPriceId($priceId) {
     }
 }
 
-function fetchProductByPrizeId($priceIds) {
+function fetchProductByPriceId($priceIds) {
     $conn = connectToDB();
     $products= array();
     $commaSeperatedList = implode(',', $priceIds);

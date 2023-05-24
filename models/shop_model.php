@@ -32,7 +32,7 @@ class ShopModel extends PageModel {
     public $flavouredproduct = '';
     public $cartContent = array();
     public $subtotal = 0;
-    public $total = 0;
+    public $total = '';
     public $updatedQuantity = 0;
 
     public function __construct($pageModel, $shopcrud) {
@@ -93,15 +93,15 @@ class ShopModel extends PageModel {
     function getCartContent() {
         $this->cart = $this->sessionManager->getCart();
         if ($this->cart != NULL) {
-            $this->products = fetchProductByPrizeId(array_keys($this->cart));
+            $products = $this->crud->readProductsByPriceId(array_keys($this->cart));
             $this->total = 0;
             $this->cartlines = array();
-            foreach($this->cart as $this->priceId=>$this->amount) {
-                $this->product = $this->products[$this->priceId];
-                $this->subtotal = $this->amount * $this->product['price'];
-                $this->cartline = array('price_id' => $this->priceId, 'id' => $this->product['id'], 'amount' => $this->amount, 'name' => $this->product['name'], 'subtotal' => $this->subtotal,
-                'price' => $this->product['price'], 'image' => $this->product['image'], 'size_id' => $this->product['size_id'], 'material_id' => $this->product['material_id'], 
-                'material' => $this->product['material']);
+            foreach($this->cart as $priceId=>$this->amount) {
+                $this->product = $products[$priceId];
+                $this->subtotal = $this->amount * $this->product->price;
+                $this->cartline = array('price_id' => $this->priceId, 'id' => $this->product->id, 'amount' => $this->amount, 'name' => $this->product->name, 'subtotal' => $this->subtotal,
+                'price' => $this->product->price, 'image' => $this->product->image, 'size_id' => $this->product->size_id, 'material_id' => $this->product->material_id, 
+                'material' => $this->product->material);
                 $this->cartlines[] = $this->cartline;
                 $this->total += $this->subtotal;
                 }
@@ -113,7 +113,7 @@ class ShopModel extends PageModel {
 
     function saveOrder($user_id, $cartContent) {
         try{
-            storeOrder($user_id, $cartContent);
+            $this->crud->createOrder($user_id, $cartContent);
             $this->sessionManager->emptyCart();
         } catch (Exception $e) {
         }
@@ -140,11 +140,14 @@ class ShopModel extends PageModel {
                 }
                 break;
             case "Bestellen" :
-                $user_id = getLoggedInID("id");
+                $user_id = $this->sessionManager->getLoggedInID();
                 $cartContent = $this->sessionManager->getCart();
-                if($cartContent)
-                $this->saveOrder($user_id, $cartContent);
+                if($cartContent) {
+                    $this->crud->createOrder($user_id, $cartContent);
+                    $this->sessionManager->emptyCart();
+                }
                 break;               
+            }
         }
     }
-}
+?>
